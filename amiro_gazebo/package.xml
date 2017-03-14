@@ -1,0 +1,24 @@
+<package>
+  <name>amiro_gazebo</name>
+  <version>0.1.0</version>
+  <description>amiro_gazebo</description>
+  <maintainer email="tkorthals@cit-ec.uni-bielefeld.de">Timo Korthals</maintainer>
+
+  <license>BSD</license>
+
+  <url type="repository">https://github.com/tik0/amiro_robot</url>
+
+  <author email="tkorthals@cit-ec.uni-bielefeld.de">Timo Korthals</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>gazebo_plugins</run_depend>
+  <run_depend>gazebo_ros</run_depend>
+  <run_depend>gazebo_ros_control</run_depend>
+  <run_depend>amiro_control</run_depend>
+  <run_depend>amiro_description</run_depend>
+  <run_depend>xacro</run_depend>
+
+  <export>
+  </export>
+</package>

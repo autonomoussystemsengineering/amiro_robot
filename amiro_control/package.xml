@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package>
+  <name>amiro_control</name>
+  <version>0.0.0</version>
+  <description>The amiro_control package</description>
+
+  <maintainer email="tkorthals@cit-ec.uni-bielefeld.de">Timo Korthals</maintainer>
+
+  <license>BSD</license>
+
+  <url type="repository">https://github.com/tik0/amiro_robot</url>
+
+  <author email="tkorthals@cit-ec.uni-bielefeld.de">Timo Korthals</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>controller_manager</run_depend>
+  <run_depend>joint_state_controller</run_depend>
+  <run_depend>robot_state_publisher</run_depend>
+
+  <run_depend>rqt_gui</run_depend>
+  <run_depend>effort_controllers</run_depend>
+
+
+  <export>
+  </export>
+
+</package>

@@ -1,0 +1,6 @@
+# Emacs Files
+.#*
+
+
+# Allow user to enable or disable this w/o changing repo
+amiro_gazebo_plugins/CATKIN_IGNORE
