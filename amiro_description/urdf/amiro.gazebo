@@ -15,6 +15,24 @@
   <!-- Link1 -->
   <gazebo reference="base_link">
     <material>Gazebo/Orange</material>
+<!--    <friction>
+        <torsional>
+            <ode>
+                <mu>0</mu>
+                <mu2>0</mu2>
+                <fdir>0</fdir>
+                <slip1>0</slip1>
+                <slip2>0</slip2>
+            </ode>
+        </torsional>
+    </friction>-->
+    <collision>
+        <surface>
+            <contact>
+                <collide_without_contact>0</collide_without_contact>
+            </contact>
+        </surface>
+    </collision>
   </gazebo>
 
   <!-- Link2 -->
