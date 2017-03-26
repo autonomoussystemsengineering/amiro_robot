@@ -12,66 +12,36 @@
   <xacro:property name="wheel_sep" value="0.069" /> <!-- amiro wheel seperation -->
   <xacro:property name="wheel_dia" value="0.05571" /> <!-- amiro wheel diameter -->
   <xacro:property name="wheel_mass" value="0.02" /> <!-- amiro wheel diameter -->
-  
-  <xacro:property name="base_link_height" value="0.045" /> <!-- amiro base link height -->
+  <xacro:property name="base_link_clearance" value="0.0026" /> <!-- space between floor and amiro base -->
+  <xacro:property name="base_link_height" value="${base_link_clearance + height / 2}" /> <!-- amiro base link height -->
 
-  <xacro:property name="base_link" value="base_link" /> <!-- amiro base link -->
-  <xacro:property name="left_wheel_link" value="left_wheel_link" /> <!-- amiro wheel link -->
-  <xacro:property name="right_wheel_link" value="right_wheel_link" /> <!-- amiro wheel link -->
+  <xacro:property name="prefix" value="" /> <!--""-->
+  <xacro:property name="base_link" value="${prefix}base_link" /> <!-- amiro base link -->
+  <xacro:property name="left_wheel_link" value="${prefix}left_wheel_link" /> <!-- amiro wheel link -->
+  <xacro:property name="right_wheel_link" value="${prefix}right_wheel_link" /> <!-- amiro wheel link -->
+  <xacro:property name="right_wheel_joint" value="${prefix}right_wheel_joint" /> <!-- amiro wheel joint -->
+  <xacro:property name="left_wheel_joint" value="${prefix}left_wheel_joint" /> <!-- amiro wheel joint -->
+  <xacro:property name="odom" value="${prefix}odom" /> <!-- amiro odometry topic/tf -->
+  <xacro:property name="cmd_vel" value="${prefix}cmd_vel" /> <!-- amiro differential command  topic -->
+
+  <xacro:property name="update_rate" value="$(arg update_rate)" /> <!-- update rate for the plugins and TFs -->
 
   <!-- Import all Gazebo-customization elements, including Gazebo colors -->
   <xacro:include filename="$(find amiro_description)/urdf/amiro.gazebo" />
   <!-- Import Rviz colors -->
   <xacro:include filename="$(find amiro_description)/urdf/materials.xacro" />
 
-  
-  <gazebo>
-    <!--<plugin filename="libgazebo_ros_control.so" name="ros_control">
-      <robotNamespace></robotNamespace>
-    </plugin>-->
-    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
-        <alwaysOn>true</alwaysOn>
-        <updateRate>50</updateRate>
-        <leftJoint>left_wheel_joint</leftJoint>
-        <rightJoint>right_wheel_joint</rightJoint>
-        <wheelSeparation>0.069</wheelSeparation> <!-- meter -->
-        <wheelDiameter>0.05571</wheelDiameter> <!-- meter -->
-        <wheelTorque>1</wheelTorque> <!-- Nm ? -->
-        <!--<odometrySource>1</odometrySource>--> <!-- ? -->
-        <commandTopic>cmd_vel</commandTopic>
-        <odometryTopic>odom</odometryTopic>
-        <odometryFrame>odom</odometryFrame>
-        <robotBaseFrame>base_link</robotBaseFrame>
-        <!--<publishTf>foo</publishTf>--> <!-- Use robot model name as prefix -->
-        <!--<robotNamespace>foo</robotNamespace>--> <!-- Use robot model name as namespace -->
-        <rosDebugLevel>2</rosDebugLevel>
-        <publishWheelTF>true</publishWheelTF>
-        <publishWheelJointState>true</publishWheelJointState>
-        <legacyMode>false</legacyMode>
-        <wheelAcceleration>1</wheelAcceleration> <!-- rad/s^2 -->
-        <wheelAcceleration>1</wheelAcceleration> <!-- rad/s^2 -->
-    </plugin>
-</gazebo>
-  
-<!--   <xacro:macro name="amiro_body" params="parent"> -->
-  <!-- Used for fixing robot to Gazebo 'base_link' -->
-<!--   <link name="base_link"/> -->
-
-<!--  <joint name="fixed" type="fixed">
-    <parent link="world"/>
-    <child link="${base_link}"/>
-  </joint>-->
-
   <!-- Base Link -->
   <link name="${base_link}">
-    <collision>
+    <!-- Base -->
+    <collision name='base_collision'>
       <origin xyz="0 0 ${base_link_height}" rpy="0 0 0"/>
       <geometry>
         <cylinder length="${height}" radius="${radius}"/>
       </geometry>
     </collision>
 
-    <visual>
+    <visual name='base_visual'>
       <origin xyz="0 0 ${base_link_height}" rpy="0 0 0"/>
       <geometry>
         <cylinder length="${height}" radius="${radius}"/>
@@ -79,7 +49,7 @@
       <material name="orange"/>
     </visual>
 
-    <inertial>
+    <inertial name='base_inertia'>
       <origin xyz="0 0 ${base_link_height}" rpy="0 0 0"/>
       <mass value="${mass}"/>
       <inertia
@@ -87,10 +57,52 @@
         iyy="0.0012" iyz="0.0"
         izz="0.005"/>
     </inertial>
+
+    <!-- Front caster -->
+    <collision name='caster_front_collision'>
+      <origin xyz="0.042 0 0.001" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.002"/>
+      </geometry>
+    </collision>
+
+    <visual name='caster_front_visual'>
+      <origin xyz="0.042 0 0.001" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.002"/>
+      </geometry>
+      <material name="orange"/>
+    </visual>
+
+    <inertial name='caster_front_inertia'>
+      <origin xyz="0.042 0 0.001" rpy="0 0 0"/>
+      <mass value="0.01"/>
+    </inertial>
+    
+    <!-- Back caster -->
+    <collision name='caster_back_collision'>
+      <origin xyz="-0.042 0 0.001" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.002"/>
+      </geometry>
+    </collision>
+
+    <visual name='caster_back_visual'>
+      <origin xyz="-0.042 0 0.001" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.002"/>
+      </geometry>
+      <material name="orange"/>
+    </visual>
+
+    <inertial name='caster_back_inertia'>
+      <origin xyz="-0.042 0 0.001" rpy="0 0 0"/>
+      <mass value="0.01"/>
+    </inertial>
   </link>
 
   <!-- Left wheel -->
-  <joint name="left_wheel_joint" type="continuous">
+  <joint name="${left_wheel_joint}" type="continuous">
     <parent link="${base_link}"/>
     <child link="${left_wheel_link}"/>
     <origin xyz="0 ${wheel_radius} 0.02" rpy="0 ${PI/2} ${PI/2}"/>
@@ -125,7 +137,7 @@
   </link>
 
   <!-- Right wheel -->
-  <joint name="right_wheel_joint" type="continuous">
+  <joint name="${right_wheel_joint}" type="continuous">
     <parent link="${base_link}"/>
     <child link="${right_wheel_link}"/>
     <origin xyz="0 -${wheel_radius} 0.02" rpy="0 ${PI/2} ${PI/2}"/>
@@ -158,163 +170,5 @@
         izz="0.0000075625"/>
     </inertial>
   </link>
-
-  
-  
-  
-  
-  
-<!--
-  <joint name="joint1" type="continuous">
-    <parent link="link1"/>
-    <child link="link2"/>
-    <origin xyz="0 ${width} ${height1 - axel_offset}" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
-    <dynamics damping="0.7"/>
-  </joint>
-
-  Middle Link
-  <link name="link2">
-    <collision>
-      <origin xyz="0 0 ${height2/2 - axel_offset}" rpy="0 0 0"/>
-      <geometry>
-        <box size="${width} ${width} ${height2}"/>
-      </geometry>
-    </collision>
-
-    <visual>
-      <origin xyz="0 0 ${height2/2 - axel_offset}" rpy="0 0 0"/>
-      <geometry>
-        <box size="${width} ${width} ${height2}"/>
-      </geometry>
-      <material name="black"/>
-    </visual>
-
-    <inertial>
-      <origin xyz="0 0 ${height2/2 - axel_offset}" rpy="0 0 0"/>
-      <mass value="${mass}"/>
-      <inertia
-          ixx="${mass / 12.0 * (width*width + height2*height2)}" ixy="0.0" ixz="0.0"
-          iyy="${mass / 12.0 * (height2*height2 + width*width)}" iyz="0.0"
-          izz="${mass / 12.0 * (width*width + width*width)}"/>
-    </inertial>
-  </link>
-
-  <joint name="joint2" type="continuous">
-    <parent link="link2"/>
-    <child link="link3"/>
-    <origin xyz="0 ${width} ${height2 - axel_offset*2}" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
-    <dynamics damping="0.7"/>
-  </joint>
-
-  Top Link
-  <link name="link3">
-    <collision>
-      <origin xyz="0 0 ${height3/2 - axel_offset}" rpy="0 0 0"/>
-      <geometry>
-        <box size="${width} ${width} ${height3}"/>
-      </geometry>
-    </collision>
-
-    <visual>
-      <origin xyz="0 0 ${height3/2 - axel_offset}" rpy="0 0 0"/>
-      <geometry>
-        <box size="${width} ${width} ${height3}"/>
-      </geometry>
-      <material name="orange"/>
-    </visual>
-
-    <inertial>
-      <origin xyz="0 0 ${height3/2 - axel_offset}" rpy="0 0 0"/>
-      <mass value="${mass}"/>
-      <inertia
-          ixx="${mass / 12.0 * (width*width + height3*height3)}" ixy="0.0" ixz="0.0"
-          iyy="${mass / 12.0 * (height3*height3 + width*width)}" iyz="0.0"
-          izz="${mass / 12.0 * (width*width + width*width)}"/>
-    </inertial>
-  </link>
-
-  <joint name="hokuyo_joint" type="fixed">
-    <axis xyz="0 1 0" />
-    <origin xyz="0 0 ${height3 - axel_offset/2}" rpy="0 0 0"/>
-    <parent link="link3"/>
-    <child link="hokuyo_link"/>
-  </joint>
-
-  Hokuyo Laser
-  <link name="hokuyo_link">
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <box size="0.1 0.1 0.1"/>
-      </geometry>
-    </collision>
-
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <mesh filename="package://amiro_description/meshes/hokuyo.dae"/>
-      </geometry>
-    </visual>
-
-    <inertial>
-      <mass value="1e-5" />
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
-    </inertial>
-  </link>
-
-  <joint name="camera_joint" type="fixed">
-    <axis xyz="0 1 0" />
-    <origin xyz="${camera_link} 0 ${height3 - axel_offset*2}" rpy="0 0 0"/>
-    <parent link="link3"/>
-    <child link="camera_link"/>
-  </joint>
-
-  <link name="camera_link">
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <box size="${camera_link} ${camera_link} ${camera_link}"/>
-      </geometry>
-    </collision>
-
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <box size="${camera_link} ${camera_link} ${camera_link}"/>
-      </geometry>
-      <material name="red"/>
-    </visual>
-
-    <inertial>
-      <mass value="1e-5" />
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
-    </inertial>
-  </link>
-
-  <transmission name="tran1">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint1">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="motor1">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-
-  <transmission name="tran2">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint2">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="motor2">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>-->
 
 </robot>

@@ -8,134 +8,100 @@
       <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
     </plugin>
   </gazebo>-->
+
+  <gazebo>
+    <!--<plugin filename="libgazebo_ros_control.so" name="ros_control">
+      <robotNamespace></robotNamespace>
+    </plugin>-->
+
+    <!--Published by differential_drive_controller-->
+    <!--<plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+      <robotNamespace></robotNamespace>
+      <jointName>right_wheel_joint, left_wheel_joint</jointName>
+      <updateRate>10.0</updateRate>
+      <alwaysOn>true</alwaysOn>
+    </plugin>-->
+
+    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>${update_rate}</updateRate>
+        <leftJoint>${left_wheel_joint}</leftJoint>
+        <rightJoint>${right_wheel_joint}</rightJoint>
+        <wheelSeparation>${wheel_sep}</wheelSeparation> <!-- meter -->
+        <wheelDiameter>${wheel_dia}</wheelDiameter> <!-- meter -->
+        <wheelTorque>1</wheelTorque> <!-- Nm -->
+        <!--<odometrySource>1</odometrySource>--> <!-- ? -->
+        <commandTopic>${cmd_vel}</commandTopic>
+        <odometryTopic>${odom}</odometryTopic>
+        <odometryFrame>${odom}</odometryFrame>
+        <robotBaseFrame>${base_link}</robotBaseFrame>
+        <publishTf>true</publishTf> <!-- Send the tf between odometryFrame and robotBaseFrame -->
+        <publishWheelTF>false</publishWheelTF> <!-- Done by robot_state_publisher -->
+        <publishWheelJointState>true</publishWheelJointState> <!-- Joint messages for robot_state_publisher -->
+        <legacyMode>false</legacyMode>
+        <wheelAcceleration>1</wheelAcceleration> <!-- rad/s^2 -->
+        <!--gazebo_ros_utils parameter-->
+        <rosDebugLevel>info</rosDebugLevel>
+    </plugin>
+  </gazebo>
+
   <gazebo>
     <self_collide>0</self_collide>
   </gazebo>
 
-  <!-- Link1 -->
-  <gazebo reference="base_link">
+  <!-- Chassi (base and castor) -->
+  <gazebo reference="${base_link}">
     <material>Gazebo/Orange</material>
-<!--    <friction>
-        <torsional>
-            <ode>
-                <mu>0</mu>
-                <mu2>0</mu2>
-                <fdir>0</fdir>
-                <slip1>0</slip1>
-                <slip2>0</slip2>
-            </ode>
-        </torsional>
-    </friction>-->
     <collision>
-        <surface>
-            <contact>
-                <collide_without_contact>0</collide_without_contact>
-            </contact>
-        </surface>
+      <surface>
+        <contact>
+          <collide_without_contact>0</collide_without_contact>
+        </contact>
+        <friction>
+          <ode>
+            <!--No friction and very slippery-->
+            <mu>0</mu>
+            <mu2>0</mu2>
+            <slip1>1</slip1>
+            <slip2>1</slip2>
+          </ode>
+        </friction>
+      </surface>
     </collision>
   </gazebo>
 
-  <!-- Link2 -->
-  <gazebo reference="right_wheel_link">
-    <mu1>0.2</mu1>
-    <mu2>0.2</mu2>
+  <!-- Right wheel -->
+  <gazebo reference="${right_wheel_link}">
+<!--    <collision>
+      <surface>
+        <friction>
+          <ode>
+            <mu>1</mu>
+            <mu2>1</mu2>
+            <slip1>0.1</slip1>
+            <slip2>0.1</slip2>
+          </ode>
+        </friction>
+      </surface>
+    </collision>-->
     <material>Gazebo/Black</material>
   </gazebo>
 
-  <!-- Link3 -->
-  <gazebo reference="left_wheel_link">
-    <mu1>0.2</mu1>
-    <mu2>0.2</mu2>
+  <!-- Left wheel -->
+  <gazebo reference="${left_wheel_link}">
+<!--    <collision>
+      <surface>
+        <friction>
+          <ode>
+            <mu>1</mu>
+            <mu2>1</mu2>
+            <slip1>0.1</slip1>
+            <slip2>0.1</slip2>
+          </ode>
+        </friction>
+      </surface>
+    </collision>-->
     <material>Gazebo/Black</material>
   </gazebo>
-
-  <!-- camera_link -->
-  <!--<gazebo reference="camera_link">
-    <mu1>0.2</mu1>
-    <mu2>0.2</mu2>
-    <material>Gazebo/Red</material>
-  </gazebo>-->
-
-  <!-- hokuyo -->
-<!--  <gazebo reference="hokuyo_link">
-    <sensor type="gpu_ray" name="head_hokuyo_sensor">
-      <pose>0 0 0 0 0 0</pose>
-      <visualize>false</visualize>
-      <update_rate>40</update_rate>
-      <ray>
-        <scan>
-          <horizontal>
-            <samples>720</samples>
-            <resolution>1</resolution>
-            <min_angle>-1.570796</min_angle>
-            <max_angle>1.570796</max_angle>
-          </horizontal>
-        </scan>
-        <range>
-          <min>0.10</min>
-          <max>30.0</max>
-          <resolution>0.01</resolution>
-        </range>
-        <noise>
-  <type>gaussian</type> -->
-          <!-- Noise parameters based on published spec for Hokuyo laser
-               achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
-               stddev of 0.01m will put 99.7% of samples within 0.03m of the true
-               reading. -->
-          <!--<mean>0.0</mean>
-          <stddev>0.01</stddev>
-        </noise>
-      </ray>
-      <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_gpu_laser.so">
-        <topicName>/amiro/laser/scan</topicName>
-        <frameName>hokuyo_link</frameName>
-      </plugin>
-    </sensor>
-  </gazebo>-->
-
-  <!-- camera -->
-<!--  <gazebo reference="camera_link">
-    <sensor type="camera" name="camera1">
-      <update_rate>30.0</update_rate>
-      <camera name="head">
-        <horizontal_fov>1.3962634</horizontal_fov>
-        <image>
-          <width>800</width>
-          <height>800</height>
-          <format>R8G8B8</format>
-        </image>
-        <clip>
-          <near>0.02</near>
-          <far>300</far>
-        </clip>
-        <noise>
-          <type>gaussian</type>-->
-          <!-- Noise is sampled independently per pixel on each frame.
-               That pixel's noise value is added to each of its color
-               channels, which at that point lie in the range [0,1]. -->
-<!--          <mean>0.0</mean>
-          <stddev>0.007</stddev>
-        </noise>
-      </camera>
-      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
-        <alwaysOn>true</alwaysOn>
-        <updateRate>0.0</updateRate>
-        <cameraName>amiro/camera1</cameraName>
-        <imageTopicName>image_raw</imageTopicName>
-        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-        <frameName>camera_link</frameName>
-        <hackBaseline>0.07</hackBaseline>
-        <distortionK1>0.0</distortionK1>
-        <distortionK2>0.0</distortionK2>
-        <distortionK3>0.0</distortionK3>
-        <distortionT1>0.0</distortionT1>
-        <distortionT2>0.0</distortionT2>
-        <CxPrime>0</CxPrime>
-        <Cx>0.0</Cx>
-        <Cy>0.0</Cy>
-        <focalLength>0.0</focalLength>
-      </plugin>
-    </sensor>
-  </gazebo>-->
 
 </robot>
