@@ -5,6 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /TF1/Frames1
+        - /AMiRo11/Status1
         - /AMiRo11/Links1
       Splitter Ratio: 0.5
     Tree Height: 749
@@ -61,6 +62,14 @@ Visualization Manager:
           Value: true
         amiro1/right_wheel_link:
           Value: true
+        amiro2/base_link:
+          Value: true
+        amiro2/left_wheel_link:
+          Value: true
+        amiro2/odom:
+          Value: true
+        amiro2/right_wheel_link:
+          Value: true
         world:
           Value: true
       Marker Scale: 1
@@ -74,6 +83,12 @@ Visualization Manager:
             amiro1/left_wheel_link:
               {}
             amiro1/right_wheel_link:
+              {}
+        amiro2/odom:
+          amiro2/base_link:
+            amiro2/left_wheel_link:
+              {}
+            amiro2/right_wheel_link:
               {}
           world:
             {}
@@ -107,6 +122,37 @@ Visualization Manager:
       Name: AMiRo1
       Robot Description: amiro1/robot_description
       TF Prefix: amiro1
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
+    - Alpha: 1
+      Class: rviz/RobotModel
+      Collision Enabled: false
+      Enabled: true
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
+        base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_wheel_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_wheel_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+      Name: AMiRo2
+      Robot Description: amiro2/robot_description
+      TF Prefix: amiro2
       Update Interval: 0
       Value: true
       Visual Enabled: true
