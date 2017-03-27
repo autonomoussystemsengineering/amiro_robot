@@ -1,47 +1,32 @@
 <?xml version="1.0"?>
 <robot>
 
-  <!-- ros_control plugin -->
-  <!--<gazebo>
-    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>/amiro</robotNamespace>
-      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
-    </plugin>
-  </gazebo>-->
-
   <gazebo>
-    <!--<plugin filename="libgazebo_ros_control.so" name="ros_control">
-      <robotNamespace></robotNamespace>
-    </plugin>-->
-
-    <!--Published by differential_drive_controller-->
-    <!--<plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
-      <robotNamespace></robotNamespace>
-      <jointName>right_wheel_joint, left_wheel_joint</jointName>
-      <updateRate>10.0</updateRate>
-      <alwaysOn>true</alwaysOn>
-    </plugin>-->
-
     <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
-        <alwaysOn>true</alwaysOn>
-        <updateRate>${update_rate}</updateRate>
-        <leftJoint>${left_wheel_joint}</leftJoint>
-        <rightJoint>${right_wheel_joint}</rightJoint>
-        <wheelSeparation>${wheel_sep}</wheelSeparation> <!-- meter -->
-        <wheelDiameter>${wheel_dia}</wheelDiameter> <!-- meter -->
-        <wheelTorque>1</wheelTorque> <!-- Nm -->
-        <!--<odometrySource>1</odometrySource>--> <!-- ? -->
-        <commandTopic>${cmd_vel}</commandTopic>
-        <odometryTopic>${odom}</odometryTopic>
-        <odometryFrame>${odom}</odometryFrame>
-        <robotBaseFrame>${base_link}</robotBaseFrame>
-        <publishTf>true</publishTf> <!-- Send the tf between odometryFrame and robotBaseFrame -->
-        <publishWheelTF>false</publishWheelTF> <!-- Done by robot_state_publisher -->
-        <publishWheelJointState>true</publishWheelJointState> <!-- Joint messages for robot_state_publisher -->
-        <legacyMode>false</legacyMode>
-        <wheelAcceleration>1</wheelAcceleration> <!-- rad/s^2 -->
-        <!--gazebo_ros_utils parameter-->
-        <rosDebugLevel>info</rosDebugLevel>
+      <alwaysOn>true</alwaysOn>
+
+      <!--Plugin parameter-->
+      <commandTopic>${cmd_vel}</commandTopic>
+      <odometryTopic>${odom}</odometryTopic>
+      <odometryFrame>${odom}</odometryFrame>
+      <robotBaseFrame>${base_link}</robotBaseFrame>
+      <publishTf>true</publishTf> <!-- Send the tf between odometryFrame and robotBaseFrame -->
+      <publishWheelTF>false</publishWheelTF> <!-- Done by robot_state_publisher -->
+      <publishWheelJointState>true</publishWheelJointState> <!-- Joint messages for robot_state_publisher -->
+      <legacyMode>false</legacyMode>
+
+      <wheelSeparation>${wheel_sep}</wheelSeparation> <!-- Meter -->
+      <wheelDiameter>${wheel_dia}</wheelDiameter> <!-- Meter -->
+      <wheelAcceleration>1</wheelAcceleration> <!-- rad/s^2 -->
+      <wheelTorque>1</wheelTorque> <!-- Newton -->
+      <updateRate>${update_rate}</updateRate>
+      <odometrySource>world</odometrySource> <!-- Use "encoder" or "world" as source -->
+
+      <leftJoint>${left_wheel_joint}</leftJoint>
+      <rightJoint>${right_wheel_joint}</rightJoint>
+
+      <!--gazebo_ros_utils parameter-->
+      <rosDebugLevel>Info</rosDebugLevel> <!-- Debug, Info, Warn, Error, Fatal -->
     </plugin>
   </gazebo>
 
