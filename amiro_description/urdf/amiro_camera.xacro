@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="amiro_hokuyo" >
+
+  <!-- Import robot -->
+  <xacro:include filename="$(find amiro_description)/urdf/amiro.xacro" />
+
+  <!-- Camera -->
+  <xacro:include filename="$(find amiro_description)/urdf/camera/camera.xacro"/>
+  <xacro:cam name="front_camera" parent="${base_link}" xyz="${camera_link_depth} 0 ${camera_link_height}" rpy="0 0 0" />
+
+</robot>

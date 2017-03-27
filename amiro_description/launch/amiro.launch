@@ -2,7 +2,9 @@
 
   <arg name="update_rate" default="50.0"/> <!-- Update rate for tfs and gazebo plugins -->
   <arg name="robot_name" default="amiro" /> <!-- Robot and prefix name -->
-  <arg name="robot_position" default="-x 0.0 -y 0.0 -z 0.01" /> <!-- Robot initial position -->
+  <arg name="robot_position" default="-x 0.0 -y 0.0 -z 0.0 -R 0 -P 0 -Y 0" /> <!-- Robot initial position -->
+  <arg name="robot_model" default="amiro.xacro" /> <!-- Robot model -->
+  
 
   <!-- tf between the world and the odom frame -->
   <node name="$(arg robot_name)_world_odom_tf"
@@ -10,7 +12,7 @@
 
   <!-- Load the URDF into the ROS Parameter Server -->
   <param name="robot_description"
-    command="$(find xacro)/xacro --inorder '$(find amiro_description)/urdf/amiro.xacro' update_rate:=$(arg update_rate)" />
+    command="$(find xacro)/xacro --inorder '$(find amiro_description)/urdf/$(arg robot_model)' update_rate:=$(arg update_rate)" />
 
   <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"

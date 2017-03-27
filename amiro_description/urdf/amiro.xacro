@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-<!-- Revolute-Revolute Manipulator -->
 <robot name="amiro" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- Constants for robot dimensions -->
@@ -24,6 +23,9 @@
   <!-- Constant dependent parameters -->
   <xacro:property name="base_link_height" value="${base_clearance + base_height / 2}" /> <!-- base link height -->
   <xacro:property name="caster_link_height" value="${caster_clearance + caster_radius}" /> <!-- caster link height -->
+  <xacro:property name="lid_link_height" value="${base_clearance + base_height}" /> <!-- top of lid from base_link -->
+  <xacro:property name="camera_link_height" value="${base_clearance + 0.032}" /> <!-- camera height from base_link -->
+  <xacro:property name="camera_link_depth" value="${base_radius}" /> <!-- camera height from base_link -->
   <!-- http://en.wikipedia.org/wiki/List_of_moment_of_inertia_tensors -->
   <xacro:property name="base_ixx" value="${1/12 * base_mass * (3*base_radius*base_radius+base_height*base_height)}" />
   <xacro:property name="base_iyy" value="${base_ixx}" />
