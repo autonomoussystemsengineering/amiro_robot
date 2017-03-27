@@ -22,3 +22,7 @@ ROS Control (NOT READY YET):
 Example of Moving Joints of amiro1:
 
     rostopic pub -r 10 /amiro1/cmd_vel geometry_msgs/Twist  '{linear:  {x: 0.1, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 0.0}}'
+
+Example of teleoperation using `ros-kinetic-turtlebot-teleop`:
+
+    rosrun turtlebot_teleop turtlebot_teleop_key _scale_linear:=0.1 _scale_angular:=0.2 turtlebot_teleop/cmd_vel:=amiro1/cmd_vel
