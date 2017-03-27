@@ -39,3 +39,9 @@ Example of teleoperation using `ros-kinetic-turtlebot-teleop`:
 * [gazebo_ros_diff_drive.cpp](http://docs.ros.org/kinetic/api/gazebo_plugins/html/gazebo__ros__diff__drive_8cpp_source.html)
 * [How do you run multiple hector_quadrotors without separate urdf files?](http://answers.gazebosim.org/question/4190/how-do-you-run-multiple-hector_quadrotors-without-separate-urdf-files/)
 * [Simulating Small Differential Drive Robot in Gazebo](http://answers.ros.org/question/47612/simulating-small-differential-drive-robot-in-gazebo/)
+
+## Courtesy
+
+* [General introduction](https://github.com/ros-simulation/gazebo_ros_demos)
+* [Meshes and scripts for RGBD camera](https://github.com/turtlebot/turtlebot)
+* [Meshes and scripts for Hokuyo URG04 laser and generic camera](https://github.com/ros-simulation/gazebo_ros_pkgs/tree/jade-devel/gazebo_plugins/test/multi_robot_scenario)

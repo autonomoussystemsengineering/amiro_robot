@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="amiro_astra" >
+
+  <!-- Import robot -->
+  <xacro:include filename="$(find amiro_description)/urdf/amiro.xacro" />
+
+  <!-- Camera -->
+  <xacro:include filename="$(find amiro_description)/urdf/camera/astra.xacro"/>
+  <xacro:sensor_astra name="astra" parent="${base_link}" cam_px="0.01" cam_pz="${lid_link_height + 0.052}" meshes="package://amiro_description/meshes/rgbd" />
+
+</robot>

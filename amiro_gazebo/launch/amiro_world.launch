@@ -25,11 +25,28 @@
     <arg name="update_rate" value="$(arg update_rate)" />
   </include>
   
-    <!-- Load the AMiRo with namespace amiro1 -->
+  <!-- Load the AMiRo with namespace amiro2 -->
   <include file="$(find amiro_description)/launch/amiro.launch" clear_params="true" ns="amiro2">
     <arg name="robot_name" value="amiro2" />
-    <arg name="robot_position" value="-x 1.0 -y 1.0 -z 0.01" />
+    <arg name="robot_position" value="-x 1.0 -y 1.0 -z 0.01 -R 0 -P 0 -Y -2.535" />
     <arg name="update_rate" value="$(arg update_rate)" />
+    <arg name="robot_model" value="amiro_camera.xacro" />
+  </include>
+  
+  <!-- Load the AMiRo+Laser with namespace amiro3 -->
+  <include file="$(find amiro_description)/launch/amiro.launch" clear_params="true" ns="amiro3">
+    <arg name="robot_name" value="amiro3" />
+    <arg name="robot_position" value="-x -1.0 -y 1.0 -z 0.01" />
+    <arg name="update_rate" value="$(arg update_rate)" />
+    <arg name="robot_model" value="amiro_hokuyo.xacro" />
+  </include>
+  
+  <!-- Load the AMiRo+Astra with namespace amiro4 -->
+  <include file="$(find amiro_description)/launch/amiro.launch" clear_params="true" ns="amiro4">
+    <arg name="robot_name" value="amiro4" />
+    <arg name="robot_position" value="-x 1.0 -y -1.0 -z 0.01" />
+    <arg name="update_rate" value="$(arg update_rate)" />
+    <arg name="robot_model" value="amiro_astra.xacro" />
   </include>
 
   <!-- Start rviz -->
