@@ -49,6 +49,15 @@
     <arg name="robot_model" value="amiro_astra.xacro" />
   </include>
 
+  <!-- Load the AMiRo+Laser with namespace amiro5 -->
+  <include file="$(find amiro_description)/launch/amiro.launch" clear_params="true" ns="amiro5">
+    <arg name="robot_name" value="amiro5" />
+    <arg name="robot_position" value="-x -1.0 -y -1.0 -z 0.01" />
+    <arg name="update_rate" value="$(arg update_rate)" />
+    <arg name="robot_model" value="amiro_hokuyo.xacro" />
+    <arg name="lid_sensor_pitch" value="0.785" />
+  </include>
+
   <!-- Start rviz -->
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find amiro_description)/launch/amiro.rviz"/>
 </launch>

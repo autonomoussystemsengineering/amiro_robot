@@ -1,9 +1,10 @@
 <launch>
 
-  <arg name="update_rate" default="50.0"/> <!-- Update rate for tfs and gazebo plugins -->
+  <arg name="update_rate" default="50.0"/> <!-- (1/s) Update rate for tfs and gazebo plugins (not sensor updates) -->
   <arg name="robot_name" default="amiro" /> <!-- Robot and prefix name -->
   <arg name="robot_position" default="-x 0.0 -y 0.0 -z 0.0 -R 0 -P 0 -Y 0" /> <!-- Robot initial position -->
   <arg name="robot_model" default="amiro.xacro" /> <!-- Robot model -->
+  <arg name="lid_sensor_pitch" default="0.0" /> <!-- (rad) If the robot has a sensor on the lid, it will be tilted by this angle -->
   
 
   <!-- tf between the world and the odom frame -->
@@ -12,7 +13,7 @@
 
   <!-- Load the URDF into the ROS Parameter Server -->
   <param name="robot_description"
-    command="$(find xacro)/xacro --inorder '$(find amiro_description)/urdf/$(arg robot_model)' update_rate:=$(arg update_rate)" />
+    command="$(find xacro)/xacro --inorder '$(find amiro_description)/urdf/$(arg robot_model)' update_rate:=$(arg update_rate) lid_sensor_pitch:=$(arg lid_sensor_pitch)" />
 
   <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
