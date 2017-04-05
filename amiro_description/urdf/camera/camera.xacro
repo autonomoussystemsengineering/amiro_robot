@@ -41,13 +41,13 @@
 
   <gazebo reference="${name}">
     <sensor type="camera" name="camera1">
-      <update_rate>30.0</update_rate>
+      <update_rate>10.0</update_rate>
       <camera name="head">
         <horizontal_fov>1.3962634</horizontal_fov>
         <image>
           <width>800</width>
           <height>800</height>
-          <format>R8G8B8</format>
+          <format>R8G8B8</format> <!-- RGB: R8G8B8, Gray: L8 -->
         </image>
         <clip>
           <near>0.02</near>

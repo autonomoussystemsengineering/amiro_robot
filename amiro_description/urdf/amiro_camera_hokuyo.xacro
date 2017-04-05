@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="amiro_hokuyo" >
+
+  <!-- Import robot (lid_link_height and base_link are defined in here) -->
+  <xacro:include filename="$(find amiro_description)/urdf/amiro.xacro" />
+
+  <!-- Laser pitch calculations-->
+  <xacro:property name="hokuyo_base_depth" value="0.05" /> <!-- (m) base depth of housing -->
+  <xacro:property name="hokuyo_base_pitch" value="$(arg lid_sensor_pitch)" /> <!-- (rad) base depth of housing -->
+  <xacro:property name="hokuyo_link_height" value="${lid_link_height + hokuyo_base_depth / 2 * sin(hokuyo_base_pitch)}" /> <!-- (m) new sensor base height after tilted-->
+
+  <!-- Laser -->
+  <xacro:include filename="$(find amiro_description)/urdf/laser/hokuyo.xacro"/>
+  <xacro:laser name="laser" parent="${base_link}" xyz="0 0 ${hokuyo_link_height}" rpy="0 ${hokuyo_base_pitch} 0" meshes="package://amiro_description/meshes/laser"/>
+
+  <!-- Camera -->
+  <xacro:include filename="$(find amiro_description)/urdf/camera/camera.xacro"/>
+  <xacro:cam name="front_camera" parent="${base_link}" xyz="${camera_link_depth} 0 ${camera_link_height}" rpy="0 0 0" />
+
+</robot>
