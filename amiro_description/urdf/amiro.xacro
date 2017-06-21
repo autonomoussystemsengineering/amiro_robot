@@ -33,6 +33,8 @@
   <xacro:property name="wheel_ixx" value="${1/12 * wheel_mass * (3*wheel_radius*wheel_radius+wheel_height*wheel_height)}" />
   <xacro:property name="wheel_iyy" value="${wheel_ixx}" />
   <xacro:property name="wheel_izz" value="${1/2*wheel_mass*wheel_radius*wheel_radius}" />
+  <xacro:property name="caster_i" value="${2/5*caster_mass*caster_radius*caster_radius}" />
+
   
   <!-- Link, topic and other names -->
   <xacro:property name="base_link" value="base_link" /> <!-- base link -->
@@ -76,17 +78,28 @@
         iyy="${base_iyy}" iyz="0.0"
         izz="${base_izz}"/>
     </inertial>
+  </link>
 
-    <!-- Front caster -->
+  <!-- Front caster joint -->
+  <joint name="front_caster_joint" type="continuous">
+    <parent link="${base_link}"/>
+    <child link="front_caster_link"/>
+    <origin xyz="${caster_sep / 2} 0 ${caster_link_height}" rpy="0 0 0"/>
+    <axis xyz="1 1 1"/>
+    <dynamics damping="0.0"/>
+  </joint>
+
+  <!-- Front caster link -->
+  <link name="front_caster_link">
     <collision name='caster_front_collision'>
-      <origin xyz="${caster_sep / 2} 0 ${caster_link_height}" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
         <sphere radius="${caster_radius}"/>
       </geometry>
     </collision>
 
     <visual name='caster_front_visual'>
-      <origin xyz="${caster_sep / 2} 0 ${caster_link_height}" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
         <sphere radius="${caster_radius}"/>
       </geometry>
@@ -94,20 +107,35 @@
     </visual>
 
     <inertial name='caster_front_inertia'>
-      <origin xyz="${caster_sep / 2} 0 ${caster_link_height}" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+       <inertia
+        ixx="${caster_i}" ixy="0.0" ixz="0.0"
+        iyy="${caster_i}" iyz="0.0"
+        izz="${caster_i}"/>
       <mass value="${caster_mass}"/>
     </inertial>
-    
-    <!-- Back caster -->
+  </link>
+
+  <!-- Back caster joint -->
+  <joint name="back_caster_joint" type="continuous">
+    <parent link="${base_link}"/>
+    <child link="back_caster_link"/>
+    <origin xyz="-${caster_sep / 2} 0 ${caster_link_height}" rpy="0 0 0"/>
+    <axis xyz="1 1 1"/>
+    <dynamics damping="0.0"/>
+  </joint>
+
+  <!-- Back caster link -->
+  <link name="back_caster_link">
     <collision name='caster_back_collision'>
-      <origin xyz="-${caster_sep / 2} 0 ${caster_link_height}" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
         <sphere radius="${caster_radius}"/>
       </geometry>
     </collision>
 
     <visual name='caster_back_visual'>
-      <origin xyz="-${caster_sep / 2} 0 ${caster_link_height}" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
         <sphere radius="${caster_radius}"/>
       </geometry>
@@ -115,7 +143,11 @@
     </visual>
 
     <inertial name='caster_back_inertia'>
-      <origin xyz="-${caster_sep / 2} 0 ${caster_link_height}" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+       <inertia
+        ixx="${caster_i}" ixy="0.0" ixz="0.0"
+        iyy="${caster_i}" iyz="0.0"
+        izz="${caster_i}"/>
       <mass value="${caster_mass}"/>
     </inertial>
   </link>

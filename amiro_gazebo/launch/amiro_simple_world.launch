@@ -3,27 +3,30 @@
   <!-- These are the arguments you can pass this launch file, for example paused:=true -->
   <arg name="paused" default="false"/>
   <arg name="use_sim_time" default="true"/>
-  <arg name="gui" default="true"/>
-  <arg name="headless" default="false"/>
-  <arg name="debug" default="false"/>
-  <arg name="update_rate" default="50.0"/> <!--Update rate for tfs and gazebo plugins-->
+  <arg name="gz_gui" default="true"/>
+  <arg name="gz_headless" default="false"/>
+  <arg name="gz_debug" default="false"/>
+  <arg name="gz_verbose" default="false"/>
+  <arg name="gz_update_rate" default="50.0"/> <!--Update rate for tfs and gazebo plugins-->
 
   <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="$(find amiro_gazebo)/worlds/amiro.world"/>
-    <arg name="debug" value="$(arg debug)" />
-    <arg name="gui" value="$(arg gui)" />
+    <arg name="debug" value="$(arg gz_debug)" />
+    <arg name="gui" value="$(arg gz_gui)" />
     <arg name="paused" value="$(arg paused)"/>
     <arg name="use_sim_time" value="$(arg use_sim_time)"/>
-    <arg name="headless" value="$(arg headless)"/>
+    <arg name="headless" value="$(arg gz_headless)"/>
+    <arg name="verbose" value="$(arg gz_verbose)"/>
   </include>
   
-  <!-- Load the AMiRo+Laser with namespace amiro3 -->
+  <!-- Load the AMiRo+Laser with namespace amiro1 -->
   <include file="$(find amiro_description)/launch/amiro.launch" clear_params="true" ns="amiro1">
     <arg name="robot_name" value="amiro1" />
     <arg name="robot_position" value="-x -1.0 -y 1.0 -z 0.01" />
-    <arg name="update_rate" value="$(arg update_rate)" />
+    <arg name="update_rate" value="$(arg gz_update_rate)" />
     <arg name="robot_model" value="amiro_hokuyo.xacro" />
+<!--     <arg name="robot_model" value="amiro.xacro" /> -->
   </include>
 
   <!-- Start rviz -->
