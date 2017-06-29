@@ -7,6 +7,7 @@
   <arg name="headless" default="false"/>
   <arg name="debug" default="false"/>
   <arg name="update_rate" default="50.0"/> <!--Update rate for tfs and gazebo plugins-->
+  <arg name="use_gpu_laser" default="false" />
 
   <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -39,6 +40,7 @@
     <arg name="robot_position" value="-x -1.0 -y 1.0 -z 0.01" />
     <arg name="update_rate" value="$(arg update_rate)" />
     <arg name="robot_model" value="amiro_hokuyo.xacro" />
+    <arg name="use_gpu_laser" value="$(arg use_gpu_laser)" />
   </include>
   
   <!-- Load the AMiRo+Astra with namespace amiro4 -->
@@ -56,6 +58,7 @@
     <arg name="update_rate" value="$(arg update_rate)" />
     <arg name="robot_model" value="amiro_hokuyo.xacro" />
     <arg name="lid_sensor_pitch" value="0.785" />
+    <arg name="use_gpu_laser" value="$(arg use_gpu_laser)" />
   </include>
 
   <!-- Start rviz -->

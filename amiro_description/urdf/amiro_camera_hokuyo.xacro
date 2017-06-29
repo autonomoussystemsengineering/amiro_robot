@@ -11,7 +11,7 @@
 
   <!-- Laser -->
   <xacro:include filename="$(find amiro_description)/urdf/laser/hokuyo.xacro"/>
-  <xacro:laser name="laser" parent="${base_link}" xyz="0 0 ${hokuyo_link_height}" rpy="0 ${hokuyo_base_pitch} 0" meshes="package://amiro_description/meshes/laser"/>
+  <xacro:laser name="laser" parent="${base_link}" xyz="0 0 ${hokuyo_link_height}" rpy="0 ${hokuyo_base_pitch} 0" meshes="package://amiro_description/meshes/laser" use_gpu="$(arg use_gpu_laser)" />
 
   <!-- Camera -->
   <xacro:include filename="$(find amiro_description)/urdf/camera/camera.xacro"/>
