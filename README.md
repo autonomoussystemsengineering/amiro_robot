@@ -95,7 +95,7 @@ Here is a brief overview of sensor indices (F:Front, B:Back):
 * Only passive tags are supported by defining their positions in `sensor_mockup/yaml/rfid.yaml`
 * It is necessary that every entry starts with the `tag_*` prefix
 * RFID presence is measured by absolute distance between AMiRo and tag location
-* TODO: Introduce active tags, or even better: Fix the naive RFID sensor in Gazebo
+* TODO: Introduce active tags, or even better: Fix the [naive RFID sensor in Gazebo](https://bitbucket.org/osrf/gazebo/src/45f77842932c95d747d2f20df98aed613792b295/gazebo/sensors/RFIDSensor.cc?at=default&fileviewer=file-view-default) which needs an [additional sensor in ROS](https://github.com/tik0/gazebo_ros_pkgs) as well
 
 ## Reference
 
