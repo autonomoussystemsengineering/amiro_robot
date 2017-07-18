@@ -3,6 +3,8 @@
 
   <!-- Constants for robot dimensions -->
   <xacro:property name="PI" value="3.1415926535897931"/>
+  <xacro:property name="PI_2" value="${PI / 2}"/>
+  <xacro:property name="deg2rad" value="${PI / 180}"/>
   <xacro:property name="base_mass" value="0.4" /> <!-- (kg) base mass -->
   <xacro:property name="base_diameter" value="0.099" /> <!-- (m) base diameter -->
   <xacro:property name="base_radius" value="${base_diameter / 2}" /> <!-- (m) base radius -->
@@ -26,6 +28,40 @@
   <xacro:property name="lid_link_height" value="${base_clearance + base_height}" /> <!-- top of lid from base_link -->
   <xacro:property name="camera_link_height" value="${base_clearance + 0.032}" /> <!-- camera height from base_link -->
   <xacro:property name="camera_link_depth" value="${base_radius}" /> <!-- camera height from base_link -->
+  <xacro:property name="proximity_floor_z" value="${base_clearance}" /> <!-- Proximity floor sensor over ground -->
+  <xacro:property name="proximity_floor_x_0" value="${base_radius - 0.005}" />
+  <xacro:property name="proximity_floor_y_0" value="-0.0035" />
+  <xacro:property name="proximity_floor_x_1" value="${base_radius - 0.021}" />
+  <xacro:property name="proximity_floor_y_1" value="-0.032" />
+  <xacro:property name="proximity_floor_x_2" value="${base_radius - 0.021}" />
+  <xacro:property name="proximity_floor_y_2" value="0.032" />
+  <xacro:property name="proximity_floor_x_3" value="${base_radius - 0.005}" />
+  <xacro:property name="proximity_floor_y_3" value="0.0035" />
+  <xacro:property name="proximity_ring_z" value="${0.027 + base_clearance}" /> <!-- Proximity ring sensor over ground -->
+  <xacro:property name="proximity_ring_yaw_3" value="${ 22.5 * deg2rad}" />
+  <xacro:property name="proximity_ring_yaw_2" value="${ 67.5 * deg2rad}" />
+  <xacro:property name="proximity_ring_yaw_1" value="${112.5 * deg2rad}" />
+  <xacro:property name="proximity_ring_yaw_0" value="${157.5 * deg2rad}" />
+  <xacro:property name="proximity_ring_yaw_7" value="${202.5 * deg2rad}" />
+  <xacro:property name="proximity_ring_yaw_6" value="${247.5 * deg2rad}" />
+  <xacro:property name="proximity_ring_yaw_5" value="${292.5 * deg2rad}" />
+  <xacro:property name="proximity_ring_yaw_4" value="${337.5 * deg2rad}" />
+  <xacro:property name="proximity_ring_x_0" value="${base_radius * cos(proximity_ring_yaw_0)}" />
+  <xacro:property name="proximity_ring_y_0" value="${base_radius * sin(proximity_ring_yaw_0)}" />
+  <xacro:property name="proximity_ring_x_1" value="${base_radius * cos(proximity_ring_yaw_1)}" />
+  <xacro:property name="proximity_ring_y_1" value="${base_radius * sin(proximity_ring_yaw_1)}" />
+  <xacro:property name="proximity_ring_x_2" value="${base_radius * cos(proximity_ring_yaw_2)}" />
+  <xacro:property name="proximity_ring_y_2" value="${base_radius * sin(proximity_ring_yaw_2)}" />
+  <xacro:property name="proximity_ring_x_3" value="${base_radius * cos(proximity_ring_yaw_3)}" />
+  <xacro:property name="proximity_ring_y_3" value="${base_radius * sin(proximity_ring_yaw_3)}" />
+  <xacro:property name="proximity_ring_x_4" value="${base_radius * cos(proximity_ring_yaw_4)}" />
+  <xacro:property name="proximity_ring_y_4" value="${base_radius * sin(proximity_ring_yaw_4)}" />
+  <xacro:property name="proximity_ring_x_5" value="${base_radius * cos(proximity_ring_yaw_5)}" />
+  <xacro:property name="proximity_ring_y_5" value="${base_radius * sin(proximity_ring_yaw_5)}" />
+  <xacro:property name="proximity_ring_x_6" value="${base_radius * cos(proximity_ring_yaw_6)}" />
+  <xacro:property name="proximity_ring_y_6" value="${base_radius * sin(proximity_ring_yaw_6)}" />
+  <xacro:property name="proximity_ring_x_7" value="${base_radius * cos(proximity_ring_yaw_7)}" />
+  <xacro:property name="proximity_ring_y_7" value="${base_radius * sin(proximity_ring_yaw_7)}" />
   <!-- http://en.wikipedia.org/wiki/List_of_moment_of_inertia_tensors -->
   <xacro:property name="base_ixx" value="${1/12 * base_mass * (3*base_radius*base_radius+base_height*base_height)}" />
   <xacro:property name="base_iyy" value="${base_ixx}" />

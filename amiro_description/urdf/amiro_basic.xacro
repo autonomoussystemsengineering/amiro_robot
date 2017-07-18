@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="amiro_basic" >
+
+  <!-- Import robot -->
+  <xacro:include filename="$(find amiro_description)/urdf/amiro.xacro" />
+
+  <!-- Floor sensors -->
+  <xacro:include filename="$(find amiro_description)/urdf/proximity/floor.xacro"/>
+  <xacro:floor name="proximity_floor_0" parent="${base_link}" xyz="${proximity_floor_x_0} ${proximity_floor_y_0} ${proximity_floor_z}" rpy="0 ${PI_2} 0" />
+  <xacro:floor name="proximity_floor_1" parent="${base_link}" xyz="${proximity_floor_x_1} ${proximity_floor_y_1} ${proximity_floor_z}" rpy="0 ${PI_2} 0" />
+  <xacro:floor name="proximity_floor_2" parent="${base_link}" xyz="${proximity_floor_x_2} ${proximity_floor_y_2} ${proximity_floor_z}" rpy="0 ${PI_2} 0" />
+  <xacro:floor name="proximity_floor_3" parent="${base_link}" xyz="${proximity_floor_x_3} ${proximity_floor_y_3} ${proximity_floor_z}" rpy="0 ${PI_2} 0" />
+
+  <!-- Ring sensors -->
+  <xacro:include filename="$(find amiro_description)/urdf/proximity/proximity.xacro"/>
+  <xacro:proxy name="proximity_ring_0" parent="${base_link}" xyz="${proximity_ring_x_0} ${proximity_ring_y_0} ${proximity_ring_z}" rpy="0 0 ${proximity_ring_yaw_0}" />
+  <xacro:proxy name="proximity_ring_1" parent="${base_link}" xyz="${proximity_ring_x_1} ${proximity_ring_y_1} ${proximity_ring_z}" rpy="0 0 ${proximity_ring_yaw_1}" />
+  <xacro:proxy name="proximity_ring_2" parent="${base_link}" xyz="${proximity_ring_x_2} ${proximity_ring_y_2} ${proximity_ring_z}" rpy="0 0 ${proximity_ring_yaw_2}" />
+  <xacro:proxy name="proximity_ring_3" parent="${base_link}" xyz="${proximity_ring_x_3} ${proximity_ring_y_3} ${proximity_ring_z}" rpy="0 0 ${proximity_ring_yaw_3}" />
+  <xacro:proxy name="proximity_ring_4" parent="${base_link}" xyz="${proximity_ring_x_4} ${proximity_ring_y_4} ${proximity_ring_z}" rpy="0 0 ${proximity_ring_yaw_4}" />
+  <xacro:proxy name="proximity_ring_5" parent="${base_link}" xyz="${proximity_ring_x_5} ${proximity_ring_y_5} ${proximity_ring_z}" rpy="0 0 ${proximity_ring_yaw_5}" />
+  <xacro:proxy name="proximity_ring_6" parent="${base_link}" xyz="${proximity_ring_x_6} ${proximity_ring_y_6} ${proximity_ring_z}" rpy="0 0 ${proximity_ring_yaw_6}" />
+  <xacro:proxy name="proximity_ring_7" parent="${base_link}" xyz="${proximity_ring_x_7} ${proximity_ring_y_7} ${proximity_ring_z}" rpy="0 0 ${proximity_ring_yaw_7}" />
+
+</robot>

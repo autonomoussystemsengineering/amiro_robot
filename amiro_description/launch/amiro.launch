@@ -6,6 +6,12 @@
   <arg name="robot_model" default="amiro.xacro" /> <!-- Robot model -->
   <arg name="lid_sensor_pitch" default="0.0" /> <!-- (rad) If the robot has a sensor on the lid, it will be tilted by this angle -->
   
+  <!-- Sensor Mockups -->
+  <!-- NOTE: proximity sensors come with amiro_basic.xacro -->
+  <arg name="enable_proximity_floor_mockup" default="false" />
+  <arg name="enable_proximity_ring_mockup" default="false" />
+  <arg name="enable_rfid_mockup" default="false" />
+  
 
   <!-- tf between the world and the odom frame -->
   <node name="$(arg robot_name)_world_odom_tf"
@@ -23,5 +29,99 @@
     <param name="publish_frequency" type="double" value="$(arg update_rate)"/>
     <param name="tf_prefix" type="string" value="$(arg robot_name)"/>
   </node>
+  
+  <!-- Mockup for floor proximity sensors -->
+  <group if="$(arg enable_proximity_floor_mockup)">
+    <node name="proximity_floor_mockup_0" pkg="sensor_mockup" type="proximity_floor_mockup_node" respawn="true">
+      <param name="topic_in" type="string" value="/$(arg robot_name)/proximity_floor_0/image_raw"/>
+      <param name="topic_out" type="string" value="/$(arg robot_name)/proximity_floor_0/value"/>  
+    </node>
+    
+    <node name="proximity_floor_mockup_1" pkg="sensor_mockup" type="proximity_floor_mockup_node" respawn="true">
+      <param name="topic_in" type="string" value="/$(arg robot_name)/proximity_floor_1/image_raw"/>
+      <param name="topic_out" type="string" value="/$(arg robot_name)/proximity_floor_1/value"/>  
+    </node>
+
+    <node name="proximity_floor_mockup_2" pkg="sensor_mockup" type="proximity_floor_mockup_node" respawn="true">
+      <param name="topic_in" type="string" value="/$(arg robot_name)/proximity_floor_2/image_raw"/>
+      <param name="topic_out" type="string" value="/$(arg robot_name)/proximity_floor_2/value"/>  
+    </node>
+    
+    <node name="proximity_floor_mockup_3" pkg="sensor_mockup" type="proximity_floor_mockup_node" respawn="true">
+      <param name="topic_in" type="string" value="/$(arg robot_name)/proximity_floor_3/image_raw"/>
+      <param name="topic_out" type="string" value="/$(arg robot_name)/proximity_floor_3/value"/>  
+    </node>
+  </group>
+
+  <!-- Mockup for ring proximity sensors -->
+  <group if="$(arg enable_proximity_ring_mockup)">
+    <node name="proximity_ring_mockup_0" pkg="sensor_mockup" type="proximity_ring_mockup_node" respawn="true">
+      <param name="topic_in" type="string" value="/$(arg robot_name)/proximity_ring_0/points"/>
+      <param name="topic_out" type="string" value="/$(arg robot_name)/proximity_ring_0/value"/>
+      <param name="max_distance_m" type="double" value="0.25"/>
+    </node>
+    
+    <node name="proximity_ring_mockup_1" pkg="sensor_mockup" type="proximity_mockup_node" respawn="true">
+      <param name="topic_in" type="string" value="/$(arg robot_name)/proximity_ring_1/points"/>
+      <param name="topic_out" type="string" value="/$(arg robot_name)/proximity_ring_1/value"/>
+      <param name="max_distance_m" type="double" value="0.25"/>
+    </node>
+    
+    <node name="proximity_ring_mockup_2" pkg="sensor_mockup" type="proximity_ring_mockup_node" respawn="true">
+      <param name="topic_in" type="string" value="/$(arg robot_name)/proximity_ring_2/points"/>
+      <param name="topic_out" type="string" value="/$(arg robot_name)/proximity_ring_2/value"/>
+      <param name="max_distance_m" type="double" value="0.25"/>
+    </node>
+    
+    <node name="proximity_ring_mockup_3" pkg="sensor_mockup" type="proximity_ring_mockup_node" respawn="true">
+      <param name="topic_in" type="string" value="/$(arg robot_name)/proximity_ring_3/points"/>
+      <param name="topic_out" type="string" value="/$(arg robot_name)/proximity_ring_3/value"/>
+      <param name="max_distance_m" type="double" value="0.25"/>
+    </node>
+    
+    <node name="proximity_ring_mockup_4" pkg="sensor_mockup" type="proximity_ring_mockup_node" respawn="true">
+      <param name="topic_in" type="string" value="/$(arg robot_name)/proximity_ring_4/points"/>
+      <param name="topic_out" type="string" value="/$(arg robot_name)/proximity_ring_4/value"/>
+      <param name="max_distance_m" type="double" value="0.25"/>
+    </node>
+    
+    <node name="proximity_ring_mockup_5" pkg="sensor_mockup" type="proximity_ring_mockup_node" respawn="true">
+      <param name="topic_in" type="string" value="/$(arg robot_name)/proximity_ring_5/points"/>
+      <param name="topic_out" type="string" value="/$(arg robot_name)/proximity_ring_5/value"/>
+      <param name="max_distance_m" type="double" value="0.25"/>
+    </node>
+    
+    <node name="proximity_ring_mockup_6" pkg="sensor_mockup" type="proximity_ring_mockup_node" respawn="true">
+      <param name="topic_in" type="string" value="/$(arg robot_name)/proximity_ring_6/points"/>
+      <param name="topic_out" type="string" value="/$(arg robot_name)/proximity_ring_6/value"/>
+      <param name="max_distance_m" type="double" value="0.25"/>
+    </node>
+    
+    <node name="proximity_ring_mockup_7" pkg="sensor_mockup" type="proximity_ring_mockup_node" respawn="true">
+      <param name="topic_in" type="string" value="/$(arg robot_name)/proximity_ring_7/points"/>
+      <param name="topic_out" type="string" value="/$(arg robot_name)/proximity_ring_7/value"/>
+      <param name="max_distance_m" type="double" value="0.25"/>
+    </node>
+  
+    <!-- Mockup for ring proximity sensors: Tf, so that the point cloud of the depthCamera (s.t. proximity sensor) lies in the optical frame-->
+    <node pkg="tf" type="static_transform_publisher" name="proximity_ring_0_tf" args="0 0 0 -1.57 0 -1.57 $(arg robot_name)/proximity_ring_0 $(arg robot_name)/proximity_ring_0_depth_frame $(arg update_rate)"/>
+    <node pkg="tf" type="static_transform_publisher" name="proximity_ring_1_tf" args="0 0 0 -1.57 0 -1.57 $(arg robot_name)/proximity_ring_1 $(arg robot_name)/proximity_ring_1_depth_frame $(arg update_rate)"/>
+    <node pkg="tf" type="static_transform_publisher" name="proximity_ring_2_tf" args="0 0 0 -1.57 0 -1.57 $(arg robot_name)/proximity_ring_2 $(arg robot_name)/proximity_ring_2_depth_frame $(arg update_rate)"/>
+    <node pkg="tf" type="static_transform_publisher" name="proximity_ring_3_tf" args="0 0 0 -1.57 0 -1.57 $(arg robot_name)/proximity_ring_3 $(arg robot_name)/proximity_ring_3_depth_frame $(arg update_rate)"/>
+    <node pkg="tf" type="static_transform_publisher" name="proximity_ring_4_tf" args="0 0 0 -1.57 0 -1.57 $(arg robot_name)/proximity_ring_4 $(arg robot_name)/proximity_ring_4_depth_frame $(arg update_rate)"/>
+    <node pkg="tf" type="static_transform_publisher" name="proximity_ring_5_tf" args="0 0 0 -1.57 0 -1.57 $(arg robot_name)/proximity_ring_5 $(arg robot_name)/proximity_ring_5_depth_frame $(arg update_rate)"/>
+    <node pkg="tf" type="static_transform_publisher" name="proximity_ring_6_tf" args="0 0 0 -1.57 0 -1.57 $(arg robot_name)/proximity_ring_6 $(arg robot_name)/proximity_ring_6_depth_frame $(arg update_rate)"/>
+    <node pkg="tf" type="static_transform_publisher" name="proximity_ring_7_tf" args="0 0 0 -1.57 0 -1.57 $(arg robot_name)/proximity_ring_7 $(arg robot_name)/proximity_ring_7_depth_frame $(arg update_rate)"/>
+  </group>
+
+  <!-- Mockup for RFID tag reader -->
+  <group if="$(arg enable_rfid_mockup)">
+    <node name="rfid_mockup" pkg="sensor_mockup" type="rfid_mockup_node" respawn="true" output="screen" >
+      <param name="topic_in" type="string" value="/$(arg robot_name)/odom"/>
+      <param name="topic_out" type="string" value="/$(arg robot_name)/rfid_tag_list"/>
+      <param name="max_tag_distance_m" type="double" value="0.1"/>
+      <rosparam command="load" file="$(find sensor_mockup)/yaml/rfid.yaml" />
+    </node>
+  </group>
 
 </launch>
