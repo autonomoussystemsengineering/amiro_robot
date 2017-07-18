@@ -53,10 +53,10 @@ Make sure that in your world `cast_shadows` and `shadows` are `false` (compare `
 
 ### Advertised Topics
 
-* `/amiro<id>/proximity_ring_<id>/value`: Ring sensors, s.t. VCNL4020 proximity sensor values
-* `/amiro<id>/proximity_floor_<id>/value`: Floor sensors, s.t. VCNL4020 proximity sensor values
-* `/amiro<id>/rfid_tag_list`: RFID tags in range
-* `/amiro<id>/odom`: Ground truth odometry message
+* `/amiro<robot_id>/proximity_ring_<sensor_id>/value`: Ring sensors, s.t. VCNL4020 proximity sensor values
+* `/amiro<robot_id>/proximity_floor_<sensor_id>/value`: Floor sensors, s.t. VCNL4020 proximity sensor values
+* `/amiro<robot_id>/rfid_tag_list`: RFID tags in range
+* `/amiro<robot_id>/odom`: Ground truth odometry message
 
 ### Proximity
 

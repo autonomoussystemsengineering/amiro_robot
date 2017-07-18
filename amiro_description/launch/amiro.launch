@@ -5,6 +5,7 @@
   <arg name="robot_position" default="-x 0.0 -y 0.0 -z 0.0 -R 0 -P 0 -Y 0" /> <!-- Robot initial position -->
   <arg name="robot_model" default="amiro.xacro" /> <!-- Robot model -->
   <arg name="lid_sensor_pitch" default="0.0" /> <!-- (rad) If the robot has a sensor on the lid, it will be tilted by this angle -->
+  <arg name="rfid_yaml_file" default="$(find amiro_gazebo)/yaml/rfid_assembly_line.yaml" />
   
   <!-- Sensor Mockups -->
   <!-- NOTE: proximity sensors come with amiro_basic.xacro -->
@@ -120,7 +121,7 @@
       <param name="topic_in" type="string" value="/$(arg robot_name)/odom"/>
       <param name="topic_out" type="string" value="/$(arg robot_name)/rfid_tag_list"/>
       <param name="max_tag_distance_m" type="double" value="0.1"/>
-      <rosparam command="load" file="$(find sensor_mockup)/yaml/rfid.yaml" />
+      <rosparam command="load" file="$(arg rfid_yaml_file)" />
     </node>
   </group>
 

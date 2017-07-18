@@ -31,6 +31,7 @@
     <arg name="enable_proximity_floor_mockup" value="true" />
     <arg name="enable_proximity_ring_mockup" value="true" />
     <arg name="enable_rfid_mockup" value="true" />
+    <arg name="rfid_yaml_file" value="$(find amiro_gazebo)/yaml/rfid_assembly_line.yaml" />
   </include>
 
   <!-- Start rviz -->
