@@ -33,7 +33,7 @@ Example of teleoperation using `ros-kinetic-turtlebot-teleop`:
     rosrun turtlebot_teleop turtlebot_teleop_key _scale_linear:=0.1 _scale_angular:=0.2 turtlebot_teleop/cmd_vel:=amiro1/cmd_vel
 
 
-## Avalable AMiRo Models
+## Available AMiRo Models
 
 All models can be loaded by including and parameterizing `amiro.launch`.
 Have a look on `amiro_world.launch`, `amiro_simple_world.launch`, or others.
@@ -45,27 +45,24 @@ Have a look on `amiro_world.launch`, `amiro_simple_world.launch`, or others.
 * `amiro_astra.xacro`: AMiRo Astra RGBD camera
 * `amiro_hokuyo_cam.xacro`: AMiRo with Hokuyo URG 04-LX LiDAR and embedded camera
 
-## Sensor Mockup
+## Sensor Mockup for Basic Version
 
-The AMiRo uses special sensors which are not included in Gazebo an therefore simulated by cameras or other sensors.
+The AMiRo uses special embedded sensors which are not included in Gazebo an therefore simulated by cameras or other sensors.
 All sensor mockups start within the common `amiro.launch`.
 Make sure that in your world `cast_shadows` and `shadows` are `false` (compare `amiro_gazebo/worlds/assembly_line.world`).
 
 ### Advertised Topics
 
-* `/amiro<id>/proximity_ring_<id>/value`: VCNL4020 proximity value
-* `/amiro<id>/proximity_floor_<id>/value`: VCNL4020 proximity value
-* `/amiro<id>/rfid_tag_list`: RFID tag in range
+* `/amiro<id>/proximity_ring_<id>/value`: Ring sensors, s.t. VCNL4020 proximity sensor values
+* `/amiro<id>/proximity_floor_<id>/value`: Floor sensors, s.t. VCNL4020 proximity sensor values
+* `/amiro<id>/rfid_tag_list`: RFID tags in range
 * `/amiro<id>/odom`: Ground truth odometry message
-
 
 ### Proximity
 
 The AMiRo uses VCNL4020 proximity sensors in its basic version to rectify the environment.
 4 sensors pointing the floor and 8 arranged co-circular on the housing.
 Here is a brief overview of sensor indices (F:Front, B:Back):
-
-TODO: Check if IDs are correct
 
     Top view of the AMiRo ring sensors and their indices:
       _____
