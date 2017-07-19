@@ -12,8 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 catkin_package(
-  INCLUDE_DIRS
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
+#   INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include
 #   LIBRARIES
   CATKIN_DEPENDS
     roscpp
