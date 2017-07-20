@@ -11,6 +11,16 @@ find_package(catkin REQUIRED COMPONENTS
   nav_msgs
 )
 
+add_message_files(
+  FILES
+  UInt16MultiArrayStamped.msg
+)
+
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
+
 catkin_package(
 #   INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include
 #   LIBRARIES
@@ -20,7 +30,8 @@ catkin_package(
     sensor_msgs
     std_msgs
     nav_msgs
-#  DEPENDS ${Boost_PACKAGE}
+  DEPENDS
+    message_runtime
 )
 
 include_directories(
@@ -44,3 +55,6 @@ add_executable(rfid_mockup_node src/rfid_mockup_node.cpp)
 target_link_libraries(rfid_mockup_node
   ${catkin_LIBRARIES}
 )
+
+add_dependencies(proximity_mockup_node sensor_mockup_gencpp sensor_mockup_gencpp)
+add_dependencies(proximity_floor_mockup_node sensor_mockup_gencpp sensor_mockup_gencpp)
