@@ -9,16 +9,8 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   std_msgs
   nav_msgs
-)
-
-add_message_files(
-  FILES
-  UInt16MultiArrayStamped.msg
-)
-
-generate_messages(
-  DEPENDENCIES
-  std_msgs
+  amiro_msgs
+  message_filters
 )
 
 catkin_package(
@@ -30,6 +22,8 @@ catkin_package(
     sensor_msgs
     std_msgs
     nav_msgs
+    amiro_msgs
+    message_filters
   DEPENDS
     message_runtime
 )
@@ -41,6 +35,12 @@ include_directories(
 add_executable(proximity_floor_mockup_node src/proximity_floor_mockup_node.cpp)
 
 target_link_libraries(proximity_floor_mockup_node
+  ${catkin_LIBRARIES}
+)
+
+add_executable(proximity_ring_mockup_node src/proximity_ring_mockup_node.cpp)
+
+target_link_libraries(proximity_ring_mockup_node
   ${catkin_LIBRARIES}
 )
 
@@ -56,5 +56,6 @@ target_link_libraries(rfid_mockup_node
   ${catkin_LIBRARIES}
 )
 
-add_dependencies(proximity_mockup_node sensor_mockup_gencpp sensor_mockup_gencpp)
-add_dependencies(proximity_floor_mockup_node sensor_mockup_gencpp sensor_mockup_gencpp)
+add_dependencies(proximity_mockup_node amiro_msgs_gencpp amiro_msgs_gencpp)
+add_dependencies(proximity_ring_mockup_node amiro_msgs_gencpp amiro_msgs_gencpp)
+add_dependencies(proximity_floor_mockup_node amiro_msgs_gencpp amiro_msgs_gencpp)
