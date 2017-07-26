@@ -24,19 +24,18 @@ void callback(const sensor_msgs::Image::ConstPtr msg0,
   values.header = msgs[0]->header;
   values.header.frame_id = "";
 
-  size_t sum = 0;
   for (std::size_t idx = 0; idx < numSensors; ++idx) {
 
     // Integrate over all pixel values
+    size_t sum = 0;
     for(auto it = msgs[idx]->data.begin(); it != msgs[idx]->data.end(); ++it) {
       sum += size_t(*it);
     }
-    // Normalize
-    sum /= msgs[idx]->data.size();
+    // Normalize to 0 .. 1
+    const double sumNormalized = double(sum) / (255.0 * msgs[idx]->data.size());
 
     // Normalize to unsigned short and send
-    std_msgs::UInt16 value;
-    values.array.data.at(idx) = uint16_t((sum / 255.0) * double(std::numeric_limits<unsigned short>::max()));
+    values.array.data.at(idx) = uint16_t(sumNormalized * double(std::numeric_limits<unsigned short>::max()));
 
     // Get the most current timestamp
     if (values.header.stamp < msgs[idx]->header.stamp) {

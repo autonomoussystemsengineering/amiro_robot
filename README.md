@@ -58,6 +58,13 @@ Make sure that in your world `cast_shadows` and `shadows` are `false` (compare `
 * `/amiro<robot_id>/rfid_tag_list`: RFID tags in range
 * `/amiro<robot_id>/odom`: Ground truth odometry message
 
+### Debugging
+
+* It might happen that some proximity sensor fail in the simulator which causes the mockups not to send anything.
+  * Check if all four floor sensors are available: `rostopic hz /amiro<robot_id>/proximity_floor_{0,1,2,3}/image_raw`
+  * Check if all eight ring sensors are available: `rostopic hz /amiro<robot_id>/proximity_ring_{0,1,2,3,4,5,6,7}/image_raw`
+
+
 ### Proximity
 
 The AMiRo uses VCNL4020 proximity sensors in its basic version to rectify the environment.

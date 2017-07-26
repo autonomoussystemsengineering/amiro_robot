@@ -42,10 +42,10 @@ void callback(const sensor_msgs::PointCloud2::ConstPtr msg0,
       dist += distTmp > max_distance_m || std::isnan(distTmp) ? 0.0 : max_distance_m - distTmp;
     }
     // Normalize
-    dist /= cloud.points.size();
+    const double distNormalized = dist / (max_distance_m * cloud.points.size());
 
     // Normalize to unsigned short
-    values.array.data.at(idx) = uint16_t((dist / max_distance_m) * double(std::numeric_limits<unsigned short>::max()));
+    values.array.data.at(idx) = uint16_t(distNormalized * double(std::numeric_limits<unsigned short>::max()));
 
     // Get the most current timestamp
     if (values.header.stamp < msgs[idx]->header.stamp) {
