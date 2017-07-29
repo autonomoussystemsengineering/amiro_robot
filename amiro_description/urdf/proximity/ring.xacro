@@ -43,7 +43,7 @@
     <sensor type="depth" name="proxy">
       <update_rate>8.0</update_rate>
       <camera name="head">
-        <horizontal_fov>1.3962634</horizontal_fov>  <!--TODO: get correct FOV for VCNL4020-->
+        <horizontal_fov>1.0472</horizontal_fov> <!-- 60 deg s.t. the fov of a VCNL4020-->
         <image>
           <width>3</width>
           <height>3</height>

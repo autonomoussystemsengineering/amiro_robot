@@ -1,6 +1,12 @@
 #include "ros/ros.h"
 #include <limits>
 #include <cmath>
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <map>
+#include <random>
+#include <cmath>
 #include "sensor_msgs/Image.h"
 #include "std_msgs/UInt16.h"
 #include <sensor_msgs/point_cloud_conversion.h>
@@ -11,6 +17,24 @@
 
 ros::Publisher pub;
 const size_t numSensors = 4;
+std::random_device rd;
+std::mt19937 gen(rd());
+
+inline double gray2mean(const double gray) {
+  const double a = 11010.7641914599;
+  const double b = 0.0610333423539444;
+  const double c = 21783.9217626851;
+  const double d = -7.94411704377273;
+  return a*atan(b*gray+d)+c;
+}
+
+inline double gray2std(const double gray) {
+  const double a = 1108.83338439758;
+  const double b = 0.0223713977792142;
+  const double c = 1503.24485506827;
+  const double d = -2.08504831316051;
+  return a*tanh(b*gray+d)+c;
+}
 
 void callback(const sensor_msgs::Image::ConstPtr msg0,
               const sensor_msgs::Image::ConstPtr msg1,
@@ -26,18 +50,30 @@ void callback(const sensor_msgs::Image::ConstPtr msg0,
 
   for (std::size_t idx = 0; idx < numSensors; ++idx) {
 
-    // Integrate over all pixel values
-    size_t sum = 0;
+    // Integrate over all pixel values to get the mean gray value
+    size_t grayIntegrated = 0;
     for(auto it = msgs[idx]->data.begin(); it != msgs[idx]->data.end(); ++it) {
-      sum += size_t(*it);
+      grayIntegrated += size_t(*it);
     }
-    // Normalize to 0 .. 1
-    const double sumNormalized = double(sum) / (255.0 * msgs[idx]->data.size());
+    // Normalize to 0 .. 255
+    const double gray = double(grayIntegrated) / msgs[idx]->data.size();
 
-    // Normalize to unsigned short and send
-    values.array.data.at(idx) = uint16_t(sumNormalized * double(std::numeric_limits<unsigned short>::max()));
+    // Parameterize the normal distribution to sample
+    std::normal_distribution<> distribution(gray2mean(gray),gray2std(gray));
 
-    // Get the most current timestamp
+    // Sample the sensor value
+    const double sensorValue = distribution(gen);
+
+    // Truncate the sampled value
+    if (sensorValue < double(std::numeric_limits<unsigned short>::min())) {
+      values.array.data.at(idx) = std::numeric_limits<unsigned short>::min();
+    } else if (sensorValue > double(std::numeric_limits<unsigned short>::max())) {
+      values.array.data.at(idx) = std::numeric_limits<unsigned short>::max();
+    } else {
+      values.array.data.at(idx) = std::round(sensorValue);
+    }
+
+    // Get the most current timestamp for the whole message
     if (values.header.stamp < msgs[idx]->header.stamp) {
       values.header.stamp = msgs[idx]->header.stamp;
     }
