@@ -1,0 +1,29 @@
+Note: Pixellocations are enumerated counter-clock wise
+
+What                     x  y
+-----------------------------------
+testing              1290   557
+testing_1             985   785
+testing_2            1133   785
+testing_3            1437   785
+testing_4            1590   785
+
+assembly1            1324  1446
+assembly1_1          1545  1219
+assembly1_2          1393  1219
+assembly1_3          1254  1219
+assembly1_4          1100  1219
+
+assembly2             724  1446  
+assembly2_1           945  1219
+assembly2_2           793  1219
+assembly2_3           654  1219
+assembly2_4           500  1219
+
+stock1                491   488
+stock1_1              414   785
+stock1_2              567   785
+
+stock2                781   488
+stock2_1              705   785
+stock2_2              857   785
