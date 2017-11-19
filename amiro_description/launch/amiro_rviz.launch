@@ -3,9 +3,11 @@
     <arg name="robot_name" value="amiro1" />
     <arg name="robot_position" value="-x 0.0 -y 0.0 -z 0.01" />
     <arg name="update_rate" value="50.0" />
+    <arg name="robot_model" value="amiro_hokuyo.xacro" />
+    <arg name="use_gazebo" value="false"/>
   </include>
 
   <!-- Show in Rviz   -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find amiro_description)/launch/amiro.rviz"/>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find amiro_description)/launch/amiro_rviz.rviz"/>
 
 </launch>

@@ -12,7 +12,7 @@ Preparation
 * Build this package (e.g. `catkin_make`)
 * Export `<path>/amiro_gazebo/models/` to your `GAZEBO_MODEL_PATH` environment variable
 
-Rviz (untested):
+Rviz (standalone visualization):
 
     roslaunch amiro_description amiro_rviz.launch
 

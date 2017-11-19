@@ -25,10 +25,11 @@
     <arg name="robot_name" value="amiro1" />
     <arg name="robot_position" value="-x -1.0 -y 1.0 -z 0.01" />
     <arg name="update_rate" value="$(arg gz_update_rate)" />
-    <arg name="robot_model" value="amiro_hokuyo.xacro" />
-<!--     <arg name="robot_model" value="amiro.xacro" /> -->
+    <arg name="use_gazebo" value="true"/>
+    <arg name="robot_model" value="amiro.xacro" />
+<!--     <arg name="robot_model" value="amiro_hokuyo.xacro" /> -->
   </include>
 
   <!-- Start rviz -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find amiro_description)/launch/amiro_simple.rviz" respawn="true" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find amiro_gazebo)/launch/amiro_simple_world.rviz" respawn="true" />
 </launch>

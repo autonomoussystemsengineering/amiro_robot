@@ -31,9 +31,10 @@
     <arg name="enable_proximity_floor_mockup" value="true" />
     <arg name="enable_proximity_ring_mockup" value="true" />
     <arg name="enable_rfid_mockup" value="true" />
+    <arg name="use_gazebo" value="true"/>
     <arg name="rfid_yaml_file" value="$(find amiro_gazebo)/yaml/rfid_assembly_line_project.yaml" />
   </include>
 
   <!-- Start rviz -->
-<!--   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find amiro_description)/launch/amiro_simple.rviz" respawn="true" /> -->
+<!--   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find amiro_gazebo)/launch/amiro_simple_world.rviz" respawn="true" /> -->
 </launch>

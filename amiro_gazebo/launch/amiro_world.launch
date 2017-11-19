@@ -23,6 +23,7 @@
     <arg name="robot_name" value="amiro1" />
     <arg name="robot_position" value="-x 0.0 -y 0.0 -z 0.01" />
     <arg name="update_rate" value="$(arg update_rate)" />
+    <arg name="use_gazebo" value="true"/>
   </include>
   
   <!-- Load the AMiRo with namespace amiro2 -->
@@ -31,6 +32,7 @@
     <arg name="robot_position" value="-x 1.0 -y 1.0 -z 0.01 -R 0 -P 0 -Y -2.535" />
     <arg name="update_rate" value="$(arg update_rate)" />
     <arg name="robot_model" value="amiro_camera.xacro" />
+    <arg name="use_gazebo" value="true"/>
   </include>
   
   <!-- Load the AMiRo+Laser with namespace amiro3 -->
@@ -39,6 +41,7 @@
     <arg name="robot_position" value="-x -1.0 -y 1.0 -z 0.01" />
     <arg name="update_rate" value="$(arg update_rate)" />
     <arg name="robot_model" value="amiro_hokuyo.xacro" />
+    <arg name="use_gazebo" value="true"/>
   </include>
   
   <!-- Load the AMiRo+Astra with namespace amiro4 -->
@@ -47,6 +50,7 @@
     <arg name="robot_position" value="-x 1.0 -y -1.0 -z 0.01" />
     <arg name="update_rate" value="$(arg update_rate)" />
     <arg name="robot_model" value="amiro_astra.xacro" />
+    <arg name="use_gazebo" value="true"/>    
   </include>
 
   <!-- Load the AMiRo+tilted Laser with namespace amiro5 -->
@@ -56,8 +60,9 @@
     <arg name="update_rate" value="$(arg update_rate)" />
     <arg name="robot_model" value="amiro_hokuyo.xacro" />
     <arg name="lid_sensor_pitch" value="0.785" />
+    <arg name="use_gazebo" value="true"/>
   </include>
 
   <!-- Start rviz -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find amiro_description)/launch/amiro.rviz"/>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find amiro_gazebo)/launch/amiro_world.rviz" respawn="true"/>
 </launch>

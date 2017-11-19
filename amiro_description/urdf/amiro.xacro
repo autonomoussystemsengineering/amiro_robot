@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot name="amiro" xmlns:xacro="http://www.ros.org/wiki/xacro">
-
+  
   <!-- Constants for robot dimensions -->
   <xacro:property name="PI" value="3.1415926535897931"/>
   <xacro:property name="PI_2" value="${PI / 2}"/>
@@ -21,6 +21,11 @@
   <xacro:property name="caster_radius" value="${caster_dia / 2}" /> <!-- (m) caster radius -->
   <xacro:property name="caster_clearance" value="0.001" /> <!-- (m) caster clearance above ground (needed, so that the robot is movable) -->
   <xacro:property name="caster_sep" value="0.072" /> <!-- (m) caster seperation (we assume that there are two symetric caster in the front and back) -->
+
+  <!-- Use CAD mesh model or the primitive one -->
+  <xacro:property name="use_mesh_model" value="true"/>
+  <xacro:property name="mesh_scale" value="0.0254"/>
+  <xacro:property name="mesh_clearance" value="${base_clearance + 0.002}" />
 
   <!-- Constant dependent parameters -->
   <xacro:property name="base_link_height" value="${base_clearance + base_height / 2}" /> <!-- base link height -->
@@ -82,11 +87,11 @@
   <xacro:property name="cmd_vel" value="cmd_vel" /> <!-- differential command  topic -->
 
   <xacro:property name="update_rate" value="$(arg update_rate)" /> <!-- update rate for the plugins and TFs -->
-
-  <!-- Import all Gazebo-customization elements, including Gazebo colors -->
-  <xacro:include filename="$(find amiro_description)/urdf/amiro.gazebo" />
+  
   <!-- Import Rviz colors -->
   <xacro:include filename="$(find amiro_description)/urdf/materials.xacro" />
+  <!-- Import all Gazebo-customization elements, including Gazebo colors -->
+  <xacro:include filename="$(find amiro_description)/urdf/amiro.gazebo" />
 
   <!-- Base Link -->
   <link name="${base_link}">
@@ -99,13 +104,38 @@
     </collision>
 
     <visual name='base_visual'>
-      <origin xyz="0 0 ${base_link_height}" rpy="0 0 0"/>
-      <geometry>
-        <cylinder length="${base_height}" radius="${base_radius}"/>
-      </geometry>
-      <material name="orange"/>
+      <xacro:if value="${use_mesh_model == 'true'}">
+        <origin xyz="${base_radius} -${base_radius} ${mesh_clearance}" rpy="0 0 ${PI/2}"/>
+        <geometry>
+<!--         <mesh filename="package://amiro_description/meshes/laser/hokuyo.dae"/> -->
+<!--           <mesh filename="package://amiro_description/meshes/robot/WheelDrive_degenerateDissolve_cleanUpGeometry002.dae"/> -->
+<!--         <mesh filename="package://amiro_description/meshes/robot/BaseAmiroOnly_degenerateDissolve_cleanUpGeometry005.dae" scale="${mesh_scale} ${mesh_scale} ${mesh_scale}"/> -->
+        <mesh filename="package://amiro_description/meshes/robot/ExtendedAmiroOnly_degenerateDissolve_cleanUpGeometry005.dae" scale="${mesh_scale} ${mesh_scale} ${mesh_scale}"/>
+<!--         <mesh filename="package://amiro_description/meshes/robot/ExtendedAmiro_degenerateDissolve_cleanUpGeometry004.dae"/> -->
+        </geometry>
+      </xacro:if>
+      <xacro:if value="${use_mesh_model != 'true'}">
+        <origin xyz="0 0 ${base_link_height}" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="${base_height}" radius="${base_radius}"/>
+        </geometry>
+        <material name="orange"/>
+      </xacro:if>
     </visual>
 
+  </link>
+
+  <!-- Dummy joint, so that the root link has no inertia -->
+  <joint name="base_inertia_joint" type="fixed">
+    <parent link="${base_link}"/>
+    <child link="base_inertia_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="1 1 1"/>
+    <dynamics damping="0.0"/>
+  </joint>
+  
+  <!-- Dummy link, so that the root link has no inertia -->
+  <link name="base_inertia_link">
     <inertial name='base_inertia'>
       <origin xyz="0 0 ${base_link_height}" rpy="0 0 0"/>
       <mass value="${base_mass}"/>
@@ -115,7 +145,7 @@
         izz="${base_izz}"/>
     </inertial>
   </link>
-
+  
   <!-- Front caster joint -->
   <joint name="front_caster_joint" type="continuous">
     <parent link="${base_link}"/>
@@ -134,13 +164,15 @@
       </geometry>
     </collision>
 
-    <visual name='caster_front_visual'>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <sphere radius="${caster_radius}"/>
-      </geometry>
-      <material name="orange"/>
-    </visual>
+    <xacro:if value="${use_mesh_model != 'true'}">
+      <visual name='caster_front_visual'>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="${caster_radius}"/>
+        </geometry>
+        <material name="orange"/>
+      </visual>
+    </xacro:if>
 
     <inertial name='caster_front_inertia'>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -170,13 +202,15 @@
       </geometry>
     </collision>
 
-    <visual name='caster_back_visual'>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <sphere radius="${caster_radius}"/>
-      </geometry>
-      <material name="orange"/>
-    </visual>
+    <xacro:if value="${use_mesh_model != 'true'}">
+      <visual name='caster_back_visual'>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="${caster_radius}"/>
+        </geometry>
+        <material name="orange"/>
+      </visual>
+    </xacro:if>
 
     <inertial name='caster_back_inertia'>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -206,11 +240,19 @@
     </collision>
 
     <visual>
-      <cylinder length="${wheel_height}" radius="${wheel_radius}"/>
-      <geometry>
+      <xacro:if value="${use_mesh_model == 'true'}">
+        <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+        <geometry>
+          <mesh filename="package://amiro_description/meshes/robot/WheelDrive_degenerateDissolve_cleanUpGeometry002_centered.dae" scale="${mesh_scale} ${mesh_scale} ${mesh_scale}"/>
+        </geometry>
+      </xacro:if>
+      <xacro:if value="${use_mesh_model != 'true'}">
         <cylinder length="${wheel_height}" radius="${wheel_radius}"/>
-      </geometry>
-      <material name="black"/>
+        <geometry>
+          <cylinder length="${wheel_height}" radius="${wheel_radius}"/>
+        </geometry>
+        <material name="black"/>
+      </xacro:if>
     </visual>
 
     <inertial>
@@ -241,11 +283,20 @@
     </collision>
 
     <visual>
-      <cylinder length="${wheel_height}" radius="${wheel_radius}"/>
-      <geometry>
+      <xacro:if value="${use_mesh_model == 'true'}">
+<!--         <origin xyz="0 -${wheel_sep / 2} ${wheel_radius + 0.005}" rpy="0 0 0"/> -->
+        <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+        <geometry>
+          <mesh filename="package://amiro_description/meshes/robot/WheelDrive_degenerateDissolve_cleanUpGeometry002_centered.dae" scale="${mesh_scale} ${mesh_scale} ${mesh_scale}"/>
+        </geometry>
+      </xacro:if>
+      <xacro:if value="${use_mesh_model != 'true'}">
         <cylinder length="${wheel_height}" radius="${wheel_radius}"/>
-      </geometry>
-      <material name="black"/>
+        <geometry>
+          <cylinder length="${wheel_height}" radius="${wheel_radius}"/>
+        </geometry>
+        <material name="black"/>
+      </xacro:if>
     </visual>
 
     <inertial>
