@@ -1,0 +1,3 @@
+[submodule "amiro_msgs"]
+	path = amiro_msgs
+	url = https://github.com/tik0/amiro_msgs.git
