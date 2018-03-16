@@ -5,6 +5,10 @@
 
 The AMiRo robot model (tested with Ubuntu 16.04, ROS Kinetic, Gazebo 7.8)
 
+![AMiRos in amiro_world.launch](/images/amiro_world_gazebo.jpg)
+
+![AMiRo on the assembly line in amiro_assembly_line_project.launch](/images/amiro_assembly_line_project.png)
+
 ## Quick Start
 
 Preparation
@@ -18,11 +22,11 @@ Rviz (standalone visualization):
 
 Gazebo:
 
-    roslaunch amiro_gazebo amiro_world.launch
+    roslaunch amiro_gazebo amiro_simple_world.launch
 
-ROS Control (NOT READY YET):
+Project for line following:
 
-    roslaunch amiro_control amiro_control.launch
+    rosrun amiro_gazebo amiro_assembly_line_project.launch
 
 Example of Moving the Robot:
 
@@ -31,7 +35,6 @@ Example of Moving the Robot:
 Example of teleoperation using `ros-kinetic-turtlebot-teleop`:
 
     rosrun turtlebot_teleop turtlebot_teleop_key _scale_linear:=0.1 _scale_angular:=0.2 turtlebot_teleop/cmd_vel:=amiro1/cmd_vel
-
 
 ## Available AMiRo Models
 
@@ -63,7 +66,6 @@ Make sure that in your world `cast_shadows` and `shadows` are `false` (compare `
 * It might happen that some proximity sensor fail in the simulator which causes the mockups not to send anything.
   * Check if all four floor sensors are available: `rostopic hz /amiro<robot_id>/proximity_floor_{0,1,2,3}/image_raw`
   * Check if all eight ring sensors are available: `rostopic hz /amiro<robot_id>/proximity_ring_{0,1,2,3,4,5,6,7}/image_raw`
-
 
 ### Proximity
 
@@ -151,7 +153,7 @@ In fact, the caster is more a bumper wich bumpes into the ground and stops the v
 Actualy, if one digs deeper you'll find out that the friction parameters cannot not be set at all [4](http://answers.gazebosim.org/question/12611/urdf-to-gazebo-differs-from-urdf-to-sdf-to-gazebo/), [5](http://answers.gazebosim.org/question/7074/urdf-to-sdf-conversion-using-gzsdf/), [6](http://answers.gazebosim.org/question/7082/using-sdf-tags-in-urdf-gazebo-extension-directly/).
 There is only a minimal hint in one answer where one says that friction for ODE is not implemented yet [7](http://answers.gazebosim.org/question/7074/urdf-to-sdf-conversion-using-gzsdf/?answer=7079#post-id-7079).
 One solution to this dilemma is to use a sphere with a revolutional joint as caster to get rid of the bumpy behaviour.
-
+However, the problem with that is that these are non-controlled joints (they are just simulated by Gazebo) and thus, Rviz reports an tf error [8](https://github.com/ros-controls/ros_controllers/issues/87).
 
 ### Install the current Gazebo7 simulator
 

@@ -4,9 +4,11 @@
   <arg name="robot_name" default="amiro" /> <!-- Robot and tf prefix name -->
   <arg name="use_gazebo" default="true" /> <!-- Where does the joint information comes from (Gazebo:true or dummy:false)? -->
   <arg name="robot_position" default="-x 0.0 -y 0.0 -z 0.0 -R 0 -P 0 -Y 0" /> <!-- Robot initial position in Gazebo -->
-  <arg name="robot_model" default="amiro.xacro" /> <!-- Robot model -->
+  <arg name="robot_model" default="amiro.xacro" /> <!-- Robot model filename -->
+  <arg name="use_mesh_model" default="true" /> <!-- Use the AMiRo model mesh instead of primitives -->
   <arg name="lid_sensor_pitch" default="0.0" /> <!-- (rad) If the robot has a sensor on the lid, it will be tilted by this angle -->
   <arg name="rfid_yaml_file" default="$(find amiro_gazebo)/yaml/rfid_assembly_line.yaml" /> <!-- RFID mockup -->
+  <arg name="rfid_max_tag_distance_m" default="0.1" /> <!-- Maximum range of detecting an RFID tag -->
   
   <!-- Sensor Mockups -->
   <!-- NOTE: proximity sensors come with amiro_basic.xacro -->
@@ -16,23 +18,23 @@
 
   <!-- Load the URDF into the ROS Parameter Server -->
   <param name="robot_description"
-    command="$(find xacro)/xacro --inorder '$(find amiro_description)/urdf/$(arg robot_model)' update_rate:=$(arg update_rate) lid_sensor_pitch:=$(arg lid_sensor_pitch)" />
+    command="$(find xacro)/xacro --inorder '$(find amiro_description)/urdf/$(arg robot_model)' update_rate:=$(arg update_rate) lid_sensor_pitch:=$(arg lid_sensor_pitch) use_mesh_model:=$(arg use_mesh_model) use_gazebo:=$(arg use_gazebo)"/>
 
   <!--Send non-fixed joint states to the /joint_states topic-->
   <group if="$(arg use_gazebo)">
-    <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+    <!-- Run a python script to send a service call to gazebo_ros to spawn a URDF robot -->
     <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
       args="-urdf -model $(arg robot_name) -param robot_description $(arg robot_position) "/>
-    <!-- tf between the world and the odom frame -->
+    <!-- tf between the world and the odom frame of the robot (the coinside) -->
     <node name="$(arg robot_name)_world_odom_tf"
       pkg="tf" type="static_transform_publisher" args="0.0 0.0 0.0 0.0 0.0 0.0 1.0 world $(arg robot_name)/odom $(arg update_rate)"/>
   </group>
   <group unless="$(arg use_gazebo)">
-    <!-- send fake joint values if gazebo is not running-->
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="screen">
+    <!-- send fake joint values if gazebo is not running (e.g. positions come from SLAM or real odometry)-->
+    <!--<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="screen">
       <param name="use_gui" value="false"/>
       <param name="rate" type="double" value="$(arg update_rate)"/>
-    </node>
+    </node>-->
   </group>
 
   <!--Send fixed joint states to /tf_static and anything from topic /joint_states to /tf -->
@@ -76,7 +78,7 @@
     <node name="rfid_mockup" pkg="sensor_mockup" type="rfid_mockup_node" respawn="true" output="screen" >
       <param name="topic_in" type="string" value="/$(arg robot_name)/odom"/>
       <param name="topic_out" type="string" value="/$(arg robot_name)/rfid_tag_list"/>
-      <param name="max_tag_distance_m" type="double" value="0.1"/>
+      <param name="rfid_max_tag_distance_m" type="double" value="$(arg rfid_max_tag_distance_m)"/>
       <rosparam command="load" file="$(arg rfid_yaml_file)" />
     </node>
   </group>

@@ -36,5 +36,5 @@
   </include>
 
   <!-- Start rviz -->
-<!--   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find amiro_gazebo)/launch/amiro_simple_world.rviz" respawn="true" /> -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find amiro_gazebo)/launch/amiro_simple_world.rviz" respawn="true" />
 </launch>

@@ -1,32 +1,41 @@
 <launch>
 
   <!-- These are the arguments you can pass this launch file, for example paused:=true -->
-  <arg name="paused" default="false"/>
-  <arg name="use_sim_time" default="true"/>
-  <arg name="gui" default="true"/>
-  <arg name="headless" default="false"/>
-  <arg name="debug" default="false"/>
+  <arg name="gz_paused" default="false"/>
+  <arg name="gz_use_sim_time" default="true"/>
+  <arg name="gz_gui" default="true"/>
+  <arg name="gz_headless" default="false"/>
+  <arg name="gz_debug" default="false"/>
   <arg name="update_rate" default="50.0"/> <!--Update rate for tfs and gazebo plugins-->
 
   <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="$(find amiro_gazebo)/worlds/amiro.world"/>
-    <arg name="debug" value="$(arg debug)" />
-    <arg name="gui" value="$(arg gui)" />
-    <arg name="paused" value="$(arg paused)"/>
-    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
-    <arg name="headless" value="$(arg headless)"/>
+    <arg name="debug" value="$(arg gz_debug)" />
+    <arg name="gui" value="$(arg gz_gui)" />
+    <arg name="paused" value="$(arg gz_paused)"/>
+    <arg name="use_sim_time" value="$(arg gz_use_sim_time)"/>
+    <arg name="headless" value="$(arg gz_headless)"/>
+  </include>
+
+  <!-- Load the AMiRo with namespace amiro0 without the CAD mesh -->
+  <include file="$(find amiro_description)/launch/amiro.launch" clear_params="true" ns="amiro0">
+    <arg name="robot_name" value="amiro0" />
+    <arg name="robot_position" value="-x 0.1 -y 0.0 -z 0.01" />
+    <arg name="update_rate" value="$(arg update_rate)" />
+    <arg name="use_gazebo" value="true"/>
+    <arg name="use_mesh_model" value="false"/>
   </include>
 
   <!-- Load the AMiRo with namespace amiro1 -->
   <include file="$(find amiro_description)/launch/amiro.launch" clear_params="true" ns="amiro1">
     <arg name="robot_name" value="amiro1" />
-    <arg name="robot_position" value="-x 0.0 -y 0.0 -z 0.01" />
+    <arg name="robot_position" value="-x -0.1 -y 0.0 -z 0.01" />
     <arg name="update_rate" value="$(arg update_rate)" />
     <arg name="use_gazebo" value="true"/>
   </include>
   
-  <!-- Load the AMiRo with namespace amiro2 -->
+  <!-- Load the AMiRo+camera and namespace amiro2 -->
   <include file="$(find amiro_description)/launch/amiro.launch" clear_params="true" ns="amiro2">
     <arg name="robot_name" value="amiro2" />
     <arg name="robot_position" value="-x 1.0 -y 1.0 -z 0.01 -R 0 -P 0 -Y -2.535" />
@@ -35,7 +44,7 @@
     <arg name="use_gazebo" value="true"/>
   </include>
   
-  <!-- Load the AMiRo+Laser with namespace amiro3 -->
+  <!-- Load the AMiRo+LiDAR with namespace amiro3 -->
   <include file="$(find amiro_description)/launch/amiro.launch" clear_params="true" ns="amiro3">
     <arg name="robot_name" value="amiro3" />
     <arg name="robot_position" value="-x -1.0 -y 1.0 -z 0.01" />
@@ -44,7 +53,7 @@
     <arg name="use_gazebo" value="true"/>
   </include>
   
-  <!-- Load the AMiRo+Astra with namespace amiro4 -->
+  <!-- Load the AMiRo+AstraRGBD with namespace amiro4 -->
   <include file="$(find amiro_description)/launch/amiro.launch" clear_params="true" ns="amiro4">
     <arg name="robot_name" value="amiro4" />
     <arg name="robot_position" value="-x 1.0 -y -1.0 -z 0.01" />
@@ -61,6 +70,30 @@
     <arg name="robot_model" value="amiro_hokuyo.xacro" />
     <arg name="lid_sensor_pitch" value="0.785" />
     <arg name="use_gazebo" value="true"/>
+  </include>
+
+  <!-- Load the AMiRo+ProximitySensors with namespace amiro6 -->
+  <include file="$(find amiro_description)/launch/amiro.launch" clear_params="true" ns="amiro6">
+    <arg name="robot_name" value="amiro6" />
+    <arg name="robot_position" value="-x 0.0 -y 2.0 -z 0.01" />
+    <arg name="update_rate" value="$(arg update_rate)" />
+    <arg name="robot_model" value="amiro_basic.xacro" />
+    <arg name="enable_proximity_floor_mockup" value="true" />
+    <arg name="enable_proximity_ring_mockup" value="true" />
+    <arg name="use_gazebo" value="true"/>
+    <arg name="rfid_yaml_file" value="$(find amiro_gazebo)/yaml/rfid_assembly_line.yaml" />
+  </include>
+
+  <!-- Load the AMiRo+RFID basic with namespace amiro7 -->
+  <include file="$(find amiro_description)/launch/amiro.launch" clear_params="true" ns="amiro7">
+    <arg name="robot_name" value="amiro7" />
+    <arg name="robot_position" value="-x 0.0 -y -2.0 -z 0.01" />
+    <arg name="update_rate" value="$(arg update_rate)" />
+    <arg name="robot_model" value="amiro_basic.xacro" />
+    <arg name="enable_rfid_mockup" value="true" />
+    <arg name="use_gazebo" value="true"/>
+    <arg name="rfid_yaml_file" value="$(find amiro_gazebo)/yaml/rfid_example.yaml" />
+    <arg name="rfid_max_tag_distance_m" value="0.1" />
   </include>
 
   <!-- Start rviz -->

@@ -23,9 +23,18 @@
   <xacro:property name="caster_sep" value="0.072" /> <!-- (m) caster seperation (we assume that there are two symetric caster in the front and back) -->
 
   <!-- Use CAD mesh model or the primitive one -->
-  <xacro:property name="use_mesh_model" value="true"/>
+  <xacro:property name="use_mesh_model" value="$(arg use_mesh_model)"/>
   <xacro:property name="mesh_scale" value="0.0254"/>
   <xacro:property name="mesh_clearance" value="${base_clearance + 0.002}" />
+
+  <!-- Decide if the joints are controlled by Gazebo or just fixed if Gazebo is not used -->
+  <xacro:property name="use_gazebo" value="$(arg use_gazebo)"/>
+  <xacro:if value="${use_gazebo == 'true'}">
+    <xacro:property name="joint_types" value="continuous"/>
+  </xacro:if>
+  <xacro:if value="${use_gazebo != 'true'}">
+    <xacro:property name="joint_types" value="fixed"/>
+  </xacro:if>
 
   <!-- Constant dependent parameters -->
   <xacro:property name="base_link_height" value="${base_clearance + base_height / 2}" /> <!-- base link height -->
@@ -108,10 +117,10 @@
         <origin xyz="${base_radius} -${base_radius} ${mesh_clearance}" rpy="0 0 ${PI/2}"/>
         <geometry>
 <!--         <mesh filename="package://amiro_description/meshes/laser/hokuyo.dae"/> -->
-<!--           <mesh filename="package://amiro_description/meshes/robot/WheelDrive_degenerateDissolve_cleanUpGeometry002.dae"/> -->
+<!--         <mesh filename="package://amiro_description/meshes/robot/WheelDrive_degenerateDissolve_cleanUpGeometry002.dae"/> -->
+<!--         <mesh filename="package://amiro_description/meshes/robot/ExtendedAmiro_degenerateDissolve_cleanUpGeometry004.dae"/> -->
 <!--         <mesh filename="package://amiro_description/meshes/robot/BaseAmiroOnly_degenerateDissolve_cleanUpGeometry005.dae" scale="${mesh_scale} ${mesh_scale} ${mesh_scale}"/> -->
         <mesh filename="package://amiro_description/meshes/robot/ExtendedAmiroOnly_degenerateDissolve_cleanUpGeometry005.dae" scale="${mesh_scale} ${mesh_scale} ${mesh_scale}"/>
-<!--         <mesh filename="package://amiro_description/meshes/robot/ExtendedAmiro_degenerateDissolve_cleanUpGeometry004.dae"/> -->
         </geometry>
       </xacro:if>
       <xacro:if value="${use_mesh_model != 'true'}">
@@ -147,7 +156,7 @@
   </link>
   
   <!-- Front caster joint -->
-  <joint name="front_caster_joint" type="continuous">
+  <joint name="front_caster_joint" type="fixed">
     <parent link="${base_link}"/>
     <child link="front_caster_link"/>
     <origin xyz="${caster_sep / 2} 0 ${caster_link_height}" rpy="0 0 0"/>
@@ -185,7 +194,7 @@
   </link>
 
   <!-- Back caster joint -->
-  <joint name="back_caster_joint" type="continuous">
+  <joint name="back_caster_joint" type="fixed">
     <parent link="${base_link}"/>
     <child link="back_caster_link"/>
     <origin xyz="-${caster_sep / 2} 0 ${caster_link_height}" rpy="0 0 0"/>
@@ -223,7 +232,7 @@
   </link>
 
   <!-- Left wheel -->
-  <joint name="${left_wheel_joint}" type="continuous">
+  <joint name="${left_wheel_joint}" type="${joint_types}">
     <parent link="${base_link}"/>
     <child link="${left_wheel_link}"/>
     <origin xyz="0 ${wheel_sep / 2} ${wheel_radius}" rpy="0 ${PI/2} ${PI/2}"/>
@@ -266,7 +275,7 @@
   </link>
 
   <!-- Right wheel -->
-  <joint name="${right_wheel_joint}" type="continuous">
+  <joint name="${right_wheel_joint}" type="${joint_types}">
     <parent link="${base_link}"/>
     <child link="${right_wheel_link}"/>
     <origin xyz="0 -${wheel_sep / 2} ${wheel_radius}" rpy="0 ${PI/2} ${PI/2}"/>
@@ -284,7 +293,6 @@
 
     <visual>
       <xacro:if value="${use_mesh_model == 'true'}">
-<!--         <origin xyz="0 -${wheel_sep / 2} ${wheel_radius + 0.005}" rpy="0 0 0"/> -->
         <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
         <geometry>
           <mesh filename="package://amiro_description/meshes/robot/WheelDrive_degenerateDissolve_cleanUpGeometry002_centered.dae" scale="${mesh_scale} ${mesh_scale} ${mesh_scale}"/>

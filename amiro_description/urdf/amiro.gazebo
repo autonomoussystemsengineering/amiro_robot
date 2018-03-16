@@ -3,13 +3,14 @@
 
   <gazebo>
     <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
-      <!--Parameters derived from http://docs.ros.org/kinetic/api/gazebo_plugins/html/gazebo__ros__diff__drive_8cpp_source.html-->
+      <!--Parameters derived from http://docs.ros.org/kinetic/api/gazebo_plugins/html/gazebo__ros__diff__drive_8cpp_source.html -->
       <!-- wheelAcceleration needs to be 0 so that the internal ODE PID controller is used.
            Other values than 0 results into numerical problems as soon as the AMiRo drives 
            faster than 0.27 m/s. I don't know why that happens, but it correlates with the
            wheel parameter. If you set the AMiRo wheel diameter to e.g. 1 m, everthing works -->
       <!-- Increasing wheelTorque value causes the gazebo simulator to be more stable with 
            little wheel diameters. a value of 5 lets the AMiRo drive at least 1 m/s -->
+      <!-- Additional tutorial: http://wiki.ros.org/urdf/Tutorials/Using%20a%20URDF%20in%20Gazebo#The_Wheels_on_the_Droid_Go_Round_and_Round -->
 
       <alwaysOn>true</alwaysOn>
 
