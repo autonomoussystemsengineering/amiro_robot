@@ -26,7 +26,7 @@ Gazebo:
 
 Project for line following:
 
-    rosrun amiro_gazebo amiro_assembly_line_project.launch
+    roslaunch amiro_gazebo amiro_assembly_line_project.launch
 
 Example of Moving the Robot:
 
