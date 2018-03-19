@@ -65,9 +65,9 @@
         </noise>
       </ray>
       <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_gpu_laser.so">
-        <robotNamespace></robotNamespace>
-        <topicName>${name}/scan</topicName>
-        <frameName>${name}</frameName>
+        <robotNamespace></robotNamespace> <!-- explicit namespace for topic and frame_id (if empty, group's namespace is applied) -->
+        <topicName>${name}</topicName> <!-- topic name to send sensor_msgs/LaserScan msg.: robotNamespace/topicName -->
+        <frameName>${name}</frameName> <!-- frame_id in sensor_msgs/LaserScan msg.: robotNamespace/frameName -->
       </plugin>
     </sensor>
     </gazebo>

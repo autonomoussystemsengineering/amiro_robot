@@ -67,9 +67,9 @@
           </ray>
 
           <plugin name="laser" filename="libgazebo_ros_laser.so" >
-            <robotNamespace></robotNamespace>
-            <topicName>${name}/scan</topicName>
-            <frameName>${name}</frameName>
+            <robotNamespace></robotNamespace> <!-- explicit namespace for topic and frame_id (if empty, group's namespace is applied) -->
+            <topicName>${name}</topicName> <!-- topic name to send sensor_msgs/LaserScan msg.: robotNamespace/topicName -->
+            <frameName>${name}</frameName> <!-- frame_id in sensor_msgs/LaserScan msg.: robotNamespace/frameName -->
           </plugin>
 
           <always_on>1</always_on>

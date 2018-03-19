@@ -9,6 +9,7 @@
   <arg name="lid_sensor_pitch" default="0.0" /> <!-- (rad) If the robot has a sensor on the lid, it will be tilted by this angle -->
   <arg name="rfid_yaml_file" default="$(find amiro_gazebo)/yaml/rfid_assembly_line.yaml" /> <!-- RFID mockup -->
   <arg name="rfid_max_tag_distance_m" default="0.1" /> <!-- Maximum range of detecting an RFID tag -->
+  <arg name="use_odom_to_world_tf" default="true" /> <!--  tf between the world and the odom frame of the robot (so that they coinside) -->
   
   <!-- Sensor Mockups -->
   <!-- NOTE: proximity sensors come with amiro_basic.xacro -->
@@ -25,8 +26,7 @@
     <!-- Run a python script to send a service call to gazebo_ros to spawn a URDF robot -->
     <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
       args="-urdf -model $(arg robot_name) -param robot_description $(arg robot_position) "/>
-    <!-- tf between the world and the odom frame of the robot (the coinside) -->
-    <node name="$(arg robot_name)_world_odom_tf"
+    <node if="$(arg use_odom_to_world_tf)" name="$(arg robot_name)_world_odom_tf"
       pkg="tf" type="static_transform_publisher" args="0.0 0.0 0.0 0.0 0.0 0.0 1.0 world $(arg robot_name)/odom $(arg update_rate)"/>
   </group>
   <group unless="$(arg use_gazebo)">
