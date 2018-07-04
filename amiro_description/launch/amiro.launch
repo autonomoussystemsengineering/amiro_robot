@@ -6,7 +6,7 @@
   <arg name="use_gazebo" default="1" /> <!-- Where does the joint information comes from (Gazebo:true or dummy:false)? -->
   <arg name="robot_position" default="-x 0.0 -y 0.0 -z 0.0 -R 0 -P 0 -Y 0" /> <!-- Robot initial position in Gazebo -->
   <arg name="robot_model" default="amiro.xacro" /> <!-- Robot model filename -->
-  <arg name="use_mesh_model" default="1" /> <!-- Use the AMiRo model mesh instead of primitives -->
+  <arg name="use_mesh_model" default="true" /> <!-- Use the AMiRo model mesh instead of primitives -->
   <arg name="lid_sensor_pitch" default="0.0" /> <!-- (rad) If the robot has a sensor on the lid, it will be tilted by this angle -->
   <arg name="rfid_yaml_file" default="$(find amiro_gazebo)/yaml/rfid_assembly_line.yaml" /> <!-- RFID mockup -->
   <arg name="rfid_max_tag_distance_m" default="0.1" /> <!-- Maximum range of detecting an RFID tag -->
@@ -32,10 +32,12 @@
   </group>
   <group unless="$(arg use_gazebo)">
     <!-- send fake joint values if gazebo is not running (e.g. positions come from SLAM or real odometry)-->
-    <!--<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="screen">
+    <!-- NOTE: The two continuous wheel joints are set to 'fixed' if Gazebo does not run, which makes joint_state_publisher unnecessary
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="screen">
       <param name="use_gui" value="false"/>
       <param name="rate" type="double" value="$(arg update_rate)"/>
-    </node>-->
+    </node>
+    -->
   </group>
 
   <!--Send fixed joint states to /tf_static and anything from topic /joint_states to /tf -->

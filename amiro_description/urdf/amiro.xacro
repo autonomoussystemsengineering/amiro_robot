@@ -29,12 +29,12 @@
 
   <!-- Decide if the joints are controlled by Gazebo or just fixed if Gazebo is not used -->
   <xacro:property name="use_gazebo" value="$(arg use_gazebo)"/>
-  <xacro:if value="${use_gazebo == 1}">
+  <xacro:if value="${use_gazebo}">
     <xacro:property name="joint_types" value="continuous"/>
   </xacro:if>
-  <xacro:if value="${use_gazebo == 0}">
+  <xacro:unless value="${use_gazebo}">
     <xacro:property name="joint_types" value="fixed"/>
-  </xacro:if>
+  </xacro:unless>
 
   <!-- Constant dependent parameters -->
   <xacro:property name="base_link_height" value="${base_clearance + base_height / 2}" /> <!-- base link height -->
@@ -113,7 +113,7 @@
     </collision>
 
     <visual name='base_visual'>
-      <xacro:if value="${use_mesh_model == 1}">
+      <xacro:if value="${use_mesh_model}">
         <origin xyz="${base_radius} -${base_radius} ${mesh_clearance}" rpy="0 0 ${PI/2}"/>
         <geometry>
 <!--         <mesh filename="package://amiro_description/meshes/laser/hokuyo.dae"/> -->
@@ -123,13 +123,13 @@
           <mesh filename="package://amiro_description/meshes/robot/ExtendedAmiroOnly_degenerateDissolve_cleanUpGeometry005.dae" scale="${mesh_scale} ${mesh_scale} ${mesh_scale}"/>
         </geometry>
       </xacro:if>
-      <xacro:if value="${use_mesh_model == 0}">
+      <xacro:unless value="${use_mesh_model}">
         <origin xyz="0 0 ${base_link_height}" rpy="0 0 0"/>
         <geometry>
           <cylinder length="${base_height}" radius="${base_radius}"/>
         </geometry>
         <material name="orange"/>
-      </xacro:if>
+      </xacro:unless>
     </visual>
 
   </link>
@@ -173,7 +173,7 @@
       </geometry>
     </collision>
 
-    <xacro:if value="${use_mesh_model == 0}">
+    <xacro:unless value="${use_mesh_model}">
       <visual name='caster_front_visual'>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
@@ -181,7 +181,7 @@
         </geometry>
         <material name="orange"/>
       </visual>
-    </xacro:if>
+    </xacro:unless>
 
     <inertial name='caster_front_inertia'>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -211,7 +211,7 @@
       </geometry>
     </collision>
 
-    <xacro:if value="${use_mesh_model == 0}">
+    <xacro:unless value="${use_mesh_model}">
       <visual name='caster_back_visual'>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
@@ -219,7 +219,7 @@
         </geometry>
         <material name="orange"/>
       </visual>
-    </xacro:if>
+    </xacro:unless>
 
     <inertial name='caster_back_inertia'>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -249,19 +249,19 @@
     </collision>
 
     <visual>
-      <xacro:if value="${use_mesh_model == 1}">
+      <xacro:if value="${use_mesh_model}">
         <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
         <geometry>
           <mesh filename="package://amiro_description/meshes/robot/WheelDrive_degenerateDissolve_cleanUpGeometry002_centered.dae" scale="${mesh_scale} ${mesh_scale} ${mesh_scale}"/>
         </geometry>
       </xacro:if>
-      <xacro:if value="${use_mesh_model == 0}">
+      <xacro:unless value="${use_mesh_model}">
         <cylinder length="${wheel_height}" radius="${wheel_radius}"/>
         <geometry>
           <cylinder length="${wheel_height}" radius="${wheel_radius}"/>
         </geometry>
         <material name="black"/>
-      </xacro:if>
+      </xacro:unless>
     </visual>
 
     <inertial>
@@ -292,19 +292,19 @@
     </collision>
 
     <visual>
-      <xacro:if value="${use_mesh_model == 1}">
+      <xacro:if value="${use_mesh_model}">
         <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
         <geometry>
           <mesh filename="package://amiro_description/meshes/robot/WheelDrive_degenerateDissolve_cleanUpGeometry002_centered.dae" scale="${mesh_scale} ${mesh_scale} ${mesh_scale}"/>
         </geometry>
       </xacro:if>
-      <xacro:if value="${use_mesh_model == 0}">
+      <xacro:unless value="${use_mesh_model}">
         <cylinder length="${wheel_height}" radius="${wheel_radius}"/>
         <geometry>
           <cylinder length="${wheel_height}" radius="${wheel_radius}"/>
         </geometry>
         <material name="black"/>
-      </xacro:if>
+      </xacro:unless>
     </visual>
 
     <inertial>
