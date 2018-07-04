@@ -1,9 +1,10 @@
+<?xml version="1.0"?>
 <launch>
 
   <!-- These are the arguments you can pass this launch file, for example paused:=true -->
   <arg name="paused" default="false"/>
   <arg name="use_sim_time" default="true"/>
-  <arg name="gz_gui" default="false"/>
+  <arg name="gz_gui" default="true"/>
   <arg name="gz_headless" default="false"/>
   <arg name="gz_debug" default="false"/>
   <arg name="gz_verbose" default="false"/>
@@ -25,7 +26,7 @@
     <arg name="robot_name" value="amiro1" />
     <arg name="robot_position" value="-x -1.0 -y 1.0 -z 0.01" />
     <arg name="update_rate" value="$(arg gz_update_rate)" />
-    <arg name="use_gazebo" value="true"/>
+    <arg name="use_gazebo" value="1"/>
     <arg name="robot_model" value="amiro_hokuyo.xacro" />
   </include>
 

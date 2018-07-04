@@ -19,8 +19,9 @@
       <odometryTopic>${odom}</odometryTopic>
       <odometryFrame>${odom}</odometryFrame>
       <robotBaseFrame>${base_link}</robotBaseFrame>
-      <publishTf>true</publishTf> <!-- Send the tf between odometry (odom) frame and robot base frame (base_link) -->
-      <publishWheelTF>false</publishWheelTF> <!-- Done by robot_state_publisher -->
+      <publishTf>true</publishTf> <!-- Send tfs -->
+      <publishWheelTF>true</publishWheelTF> <!-- Done by robot_state_publisher -->
+      <publishOdomTF>true</publishOdomTF> <!-- Send the tf between odometry (odom) frame and robot base frame (base_link) -->
       <publishWheelJointState>true</publishWheelJointState> <!-- Joint messages for robot_state_publisher -->
       <legacyMode>false</legacyMode>
 

@@ -1,11 +1,12 @@
+<?xml version="1.0"?>
 <launch>
 
   <arg name="update_rate" default="50.0"/> <!-- (1/s) Update rate for tfs and gazebo plugins (not sensor updates) -->
   <arg name="robot_name" default="amiro" /> <!-- Robot and tf prefix name -->
-  <arg name="use_gazebo" default="true" /> <!-- Where does the joint information comes from (Gazebo:true or dummy:false)? -->
+  <arg name="use_gazebo" default="1" /> <!-- Where does the joint information comes from (Gazebo:true or dummy:false)? -->
   <arg name="robot_position" default="-x 0.0 -y 0.0 -z 0.0 -R 0 -P 0 -Y 0" /> <!-- Robot initial position in Gazebo -->
   <arg name="robot_model" default="amiro.xacro" /> <!-- Robot model filename -->
-  <arg name="use_mesh_model" default="true" /> <!-- Use the AMiRo model mesh instead of primitives -->
+  <arg name="use_mesh_model" default="1" /> <!-- Use the AMiRo model mesh instead of primitives -->
   <arg name="lid_sensor_pitch" default="0.0" /> <!-- (rad) If the robot has a sensor on the lid, it will be tilted by this angle -->
   <arg name="rfid_yaml_file" default="$(find amiro_gazebo)/yaml/rfid_assembly_line.yaml" /> <!-- RFID mockup -->
   <arg name="rfid_max_tag_distance_m" default="0.1" /> <!-- Maximum range of detecting an RFID tag -->
