@@ -1,0 +1,18 @@
+material WatchmenRouteProject/Image
+{
+  technique
+  {
+    pass
+    {
+      ambient 1 1 1 1.000000
+      diffuse 1 1 1 1.000000
+
+      texture_unit
+      {
+        texture watchmen_route_0.png
+        filtering trilinear
+      }
+    }
+  }
+}
+

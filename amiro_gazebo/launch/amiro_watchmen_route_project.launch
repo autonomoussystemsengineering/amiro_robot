@@ -1,0 +1,46 @@
+<launch>
+
+  <!-- These are the arguments you can pass this launch file, for example paused:=true -->
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gz_gui" default="true"/>
+  <arg name="gz_headless" default="false"/>
+  <arg name="gz_debug" default="false"/>
+  <arg name="gz_verbose" default="false"/>
+  <arg name="gz_respawn_gazebo" default="true"/>
+  <arg name="gz_update_rate" default="50.0"/> <!--Update rate for tfs and gazebo plugins-->
+
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find amiro_gazebo)/worlds/watchmen_route_project.world"/>
+    <arg name="debug" value="$(arg gz_debug)" />
+    <arg name="gui" value="$(arg gz_gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg gz_headless)"/>
+    <arg name="verbose" value="$(arg gz_verbose)"/>
+    <arg name="respawn_gazebo" value="$(arg gz_respawn_gazebo)"/>
+  </include>
+  
+  <!-- Load the AMiRo basic with namespace amiro1 -->
+  <include file="$(find amiro_description)/launch/amiro.launch" clear_params="true" ns="amiro1">
+    <arg name="robot_name" value="amiro1" />
+    <arg name="robot_position" value="-x 2.5 -y 2.5 -z 0.01 -R 0.0 -P 0.0 -Y 0.0" /> <?Baseposition watchmen_route_0 ?>
+    <!-- <arg name="robot_position" value="-x 0.06 -y 0.06 -z 0.01 -R 0.0 -P 0.0 -Y 0.0" /> <?Baseposition watchmen_route_1 ?> -->
+    <!-- <arg name="robot_position" value="-x 0.06 -y 0.06 -z 0.01 -R 0.0 -P 0.0 -Y 0.0" /> <?Baseposition watchmen_route_2 ?> -->
+    <arg name="update_rate" value="$(arg gz_update_rate)" />
+    <arg name="robot_model" value="amiro_basic.xacro" />
+    <arg name="enable_proximity_floor_mockup" value="true" />
+    <arg name="enable_proximity_ring_mockup" value="false" />
+    <arg name="enable_rfid_mockup" value="false" />
+    <arg name="use_gazebo" value="true"/>
+  </include>
+
+  <!-- Load the AMiRo basic with namespace amiro1 -->
+  <rosparam command="load" file="$(find amiro_gazebo)/yaml/watchmen_route_0.yaml" ns="watchmen_route_0" />
+  <rosparam command="load" file="$(find amiro_gazebo)/yaml/watchmen_route_1.yaml" ns="watchmen_route_1" />
+  <rosparam command="load" file="$(find amiro_gazebo)/yaml/watchmen_route_2.yaml" ns="watchmen_route_2" />
+
+  <!-- Start rviz -->
+  <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find amiro_gazebo)/launch/amiro_simple_world.rviz" respawn="true" /> -->
+</launch>

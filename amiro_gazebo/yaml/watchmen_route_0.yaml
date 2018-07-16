@@ -1,0 +1,21 @@
+base:
+    id: 8
+    pose2d: [2.5,    2.5,     0.0]
+beacon_0:
+    id: 0
+    pose2d: [3.5,    2.5,    45.0]
+beacon_1:
+    id: 1
+    pose2d: [3.25,   3.0,    90.0]
+beacon_2:
+    id: 2
+    pose2d: [2.5,    3.0,   180.0]
+beacon_3:
+    id: 3
+    pose2d: [1.75,   3.0,     0.0]
+beacon_4:
+    id: 4
+    pose2d: [1.5,    2.5,   225.0]
+beacon_5:
+    id: 5
+    pose2d: [2.5,    2.0,    45.0]
