@@ -33,25 +33,25 @@ include_directories(
 )
 
 add_executable(proximity_floor_mockup_node src/proximity_floor_mockup_node.cpp)
-
+add_dependencies(proximity_floor_mockup_node amiro_msgs_generate_messages_cpp)
 target_link_libraries(proximity_floor_mockup_node
   ${catkin_LIBRARIES}
 )
 
 add_executable(proximity_ring_mockup_node src/proximity_ring_mockup_node.cpp)
-
+add_dependencies(proximity_ring_mockup_node amiro_msgs_generate_messages_cpp)
 target_link_libraries(proximity_ring_mockup_node
   ${catkin_LIBRARIES}
 )
 
 add_executable(proximity_mockup_node src/proximity_mockup_node.cpp)
-
+add_dependencies(proximity_mockup_node amiro_msgs_generate_messages_cpp)
 target_link_libraries(proximity_mockup_node
   ${catkin_LIBRARIES}
 )
 
 add_executable(rfid_mockup_node src/rfid_mockup_node.cpp)
-
+add_dependencies(rfid_mockup_node amiro_msgs_generate_messages_cpp)
 target_link_libraries(rfid_mockup_node
   ${catkin_LIBRARIES}
 )
