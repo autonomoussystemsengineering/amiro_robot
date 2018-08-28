@@ -130,6 +130,14 @@ Here is a brief overview of sensor indices (F:Front, B:Back):
 
 * If simulation is to heavy, try decreasing `real_time_update_rate`
 
+### ROS Melodic Issues
+
+It could happen the the AMiRo CAD model is missing in Rviz when using ROS Melodic as mentioned [here](https://answers.ros.org/question/296227/robot-model-does-not-appear-in-rviz-melodic).
+This is related to [this](https://github.com/ros-visualization/rviz/issues/1249) bug.
+A simple, yet efective fix is setting the environment variable:
+
+    export LC_NUMERIC="en_US.UTF-8"
+
 ### Generate SDF from XACRO
 
 First generate an URDF file and then build the SDF from that:
