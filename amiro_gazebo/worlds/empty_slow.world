@@ -10,7 +10,7 @@
       <uri>model://ground_plane</uri>
     </include>
     
-    <physics name="ode_70iters" type="ode">
+    <!-- <physics name="ode_70iters" type="ode">
       <real_time_update_rate>1500</real_time_update_rate>
       <ode>
         <solver>
@@ -18,18 +18,19 @@
           <iters>70</iters>
         </solver>
       </ode>
-    </physics>
+    </physics> -->
 
-    <physics name="ode_200iters" type="ode" default="true">
+    <physics name="ode_1000iters" type="ode" default="true">
       <default>true</default>
       <real_time_update_rate>100</real_time_update_rate>
       <ode>
         <solver>
           <type>quick</type>
-          <iters>200</iters>
+          <iters>1000</iters>
         </solver>
       </ode>
     </physics>
+    
 
   </world>
 </sdf>
