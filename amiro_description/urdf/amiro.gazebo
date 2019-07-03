@@ -28,7 +28,8 @@
       <wheelSeparation>${wheel_sep}</wheelSeparation> <!-- Meter -->
       <wheelDiameter>${wheel_dia}</wheelDiameter> <!-- Meter -->
       <wheelAcceleration>0.0</wheelAcceleration> <!-- rad/s^2 -->
-      <wheelTorque>5.0</wheelTorque> <!-- Newton -->
+      <wheelTorque>50.0</wheelTorque> <!-- Newton - For Faulhaber Serie 2619 (1:22 gear reduction) with short time duty torque (stdq) = 75mNm, 
+      shaft diameter (sd) = 3mm and 2 motors -> stdq/sd * 2 = 50N -->
       <updateRate>${update_rate}</updateRate>
       <odometrySource>world</odometrySource> <!-- Use "encoder" or "world" as source -->
 
