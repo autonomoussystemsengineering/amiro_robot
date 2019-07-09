@@ -3,10 +3,10 @@
   <!-- These are the arguments you can pass this launch file, for example paused:=true -->
   <arg name="paused" default="false"/>
   <arg name="use_sim_time" default="true"/>
-  <arg name="gz_gui" default="false"/>
+  <arg name="gz_gui" default="true"/>
   <arg name="gz_headless" default="false"/>
   <arg name="gz_debug" default="false"/>
-  <arg name="gz_verbose" default="true"/>
+  <arg name="gz_verbose" default="false"/>
   <arg name="gz_respawn_gazebo" default="true"/>
   <arg name="gz_update_rate" default="50.0"/> <!--Update rate for tfs and gazebo plugins-->
 
