@@ -30,7 +30,7 @@
         </geometry>
         <material>
           <script>
-            <uri>model://gridworld_project/materials/gridworld.material</uri>
+            <uri>model://gridworld_project/gridworld/materials/gridworld.material</uri>
             <name>GridworldProject/Image</name>
           </script>
         </material>
