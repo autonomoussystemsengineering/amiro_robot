@@ -8,7 +8,7 @@
         <geometry>
           <plane>
             <normal>0 0 1</normal>
-            <size>1.5 0.914</size>
+            <size>1.85 1.29</size>
           </plane>
         </geometry>
         <surface>
@@ -25,12 +25,12 @@
         <geometry>
           <plane>
             <normal>0 0 1</normal>
-            <size>1.5 0.914</size>
+            <size>1.85 1.29</size>
           </plane>
         </geometry>
         <material>
           <script>
-            <uri>model://gridworld_project/gridworld/materials/gridworld.material</uri>
+            <uri>model://gridworld_project/materials/gridworld.material</uri>
             <name>GridworldProject/Image</name>
           </script>
         </material>

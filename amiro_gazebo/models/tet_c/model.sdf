@@ -2,7 +2,7 @@
 <sdf version='1.6'>
   <model name='tet_c'>
     <link name='base_link'>
-      <pose frame=''>-0.00913 -0.19603 0 0 -0 0</pose>
+      <pose frame=''>0 0 0 0 -0 0</pose>
       <inertial>
         <mass>1</mass>
         <inertia>

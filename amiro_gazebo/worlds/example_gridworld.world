@@ -16,12 +16,12 @@
     <model name='gridworld_project'>
       <static>1</static>
       <link name='link'>
-        <pose frame=''>0.75 0.457 0 0 -0 0</pose>
+        <pose frame=''>0.675 0.395 0 0 -0 0</pose>
         <collision name='collision'>
           <geometry>
             <plane>
               <normal>0 0 1</normal>
-              <size>1.5 0.914</size>
+              <size>1.85 1.29</size>
             </plane>
           </geometry>
           <surface>
@@ -46,12 +46,12 @@
           <geometry>
             <plane>
               <normal>0 0 1</normal>
-              <size>1.5 0.914</size>
+              <size>1.85 1.29</size>
             </plane>
           </geometry>
           <material>
             <script>
-              <uri>model://gridworld_project/gridworld/materials/gridworld.material</uri>
+              <uri>model://gridworld_project/materials/gridworld.material</uri>
               <name>GridworldProject/Image</name>
             </script>
           </material>
@@ -196,7 +196,7 @@
     </model>
     <model name='tet_c'>
       <link name='base_link'>
-        <pose frame=''>-0.00913 -0.19603 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <inertial>
           <mass>1</mass>
           <inertia>
@@ -405,8 +405,8 @@
       <pose frame=''>0.922104 1.52878 0 0 -0 0</pose>
     </model>
     <model name='tet_g'>
-      <link name='link_10'>
-        <pose frame=''>0.015301 -0.041519 0 0 -0 0</pose>
+      <link name='base_link'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <inertial>
           <mass>1</mass>
           <inertia>
@@ -517,7 +517,7 @@
     </model>
     <model name='tet_r'>
       <link name='base_link'>
-        <pose frame=''>-0.035363 -0.204745 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <inertial>
           <mass>1</mass>
           <inertia>
@@ -628,7 +628,7 @@
     </model>
     <model name='tet_v'>
       <link name='base_link'>
-        <pose frame=''>-0.025129 -0.151272 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <inertial>
           <mass>1</mass>
           <inertia>
@@ -739,7 +739,7 @@
     </model>
     <model name='tet_y'>
       <link name='base_link'>
-        <pose frame=''>0.026498 0.022005 0 0 -0 0</pose>
+        <pose frame=''>0 0 0 0 -0 0</pose>
         <inertial>
           <mass>1</mass>
           <inertia>
@@ -849,7 +849,7 @@
         <pose frame=''>0 0 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>0.75 0.457 0 0 -0 0</pose>
+          <pose frame=''>0.675 0.395 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -859,7 +859,7 @@
         <pose frame=''>0.306889 0.627487 -9e-06 4e-06 -2e-06 -1.5708</pose>
         <scale>1 1 1</scale>
         <link name='base_link'>
-          <pose frame=''>0.306889 0.627487 -9e-06 4e-06 -2e-06 -1.5708</pose>
+          <pose frame=''>0.256889 0.577487 -9e-06 4e-06 -2e-06 -1.5708</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 -9.8 0 -0 0</acceleration>
           <wrench>0 0 -9.8 0 -0 0</wrench>
@@ -869,7 +869,7 @@
         <pose frame=''>1.05481 0.109597 -2e-06 2e-06 1e-06 1.5708</pose>
         <scale>1 1 1</scale>
         <link name='base_link'>
-          <pose frame=''>1.25084 0.100467 -2e-06 2e-06 1e-06 1.5708</pose>
+          <pose frame=''>1.20084 0.050467 -2e-06 2e-06 1e-06 1.5708</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 -9.8 0 -0 0</acceleration>
           <wrench>0 0 -9.8 0 -0 0</wrench>
@@ -878,8 +878,8 @@
       <model name='tet_g'>
         <pose frame=''>0.842251 0.357573 -8e-06 -1e-06 -1e-06 -1.5708</pose>
         <scale>1 1 1</scale>
-        <link name='link_10'>
-          <pose frame=''>0.800732 0.342272 -8e-06 -1e-06 -1e-06 -1.5708</pose>
+        <link name='base_link'>
+          <pose frame=''>0.750732 0.292272 -8e-06 -1e-06 -1e-06 -1.5708</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 -9.8 0 -0 0</acceleration>
           <wrench>0 0 -9.8 0 -0 0</wrench>
@@ -889,7 +889,7 @@
         <pose frame=''>1.15308 0.69444 -1e-05 -1e-06 -0 -1.5708</pose>
         <scale>1 1 1</scale>
         <link name='base_link'>
-          <pose frame=''>1.15308 0.69444 -1e-05 -1e-06 -0 -1.5708</pose>
+          <pose frame=''>1.10308 0.64444 -1e-05 -1e-06 -0 -1.5708</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 -9.8 0 -0 0</acceleration>
           <wrench>0 0 -9.8 0 -0 0</wrench>
@@ -899,7 +899,7 @@
         <pose frame=''>0.865457 0.451447 -1e-06 -1e-06 -1e-06 -1.5708</pose>
         <scale>1 1 1</scale>
         <link name='base_link'>
-          <pose frame=''>0.660712 0.48681 -1e-06 -1e-06 -1e-06 -1.5708</pose>
+          <pose frame=''>0.610712 0.43681 -1e-06 -1e-06 -1e-06 -1.5708</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 -9.8 0 -0 0</acceleration>
           <wrench>0 0 -9.8 0 -0 0</wrench>
@@ -909,7 +909,7 @@
         <pose frame=''>0.387816 0.181654 -1e-06 -1e-06 1e-06 -1.5708</pose>
         <scale>1 1 1</scale>
         <link name='base_link'>
-          <pose frame=''>0.236544 0.206783 -1e-06 -1e-06 1e-06 -1.5708</pose>
+          <pose frame=''>0.186544 0.156783 -1e-06 -1e-06 1e-06 -1.5708</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 -9.8 0 -0 0</acceleration>
           <wrench>0 0 -9.8 0 -0 0</wrench>
@@ -919,7 +919,7 @@
         <pose frame=''>0.94767 0.740909 0 1e-06 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='base_link'>
-          <pose frame=''>0.974168 0.762914 0 1e-06 -0 0</pose>
+          <pose frame=''>0.924168 0.712914 0 1e-06 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 -0.106982 -2.21213 0.000118 0</acceleration>
           <wrench>0 0 -0.106982 0 -0 0</wrench>

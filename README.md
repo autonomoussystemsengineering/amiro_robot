@@ -14,7 +14,7 @@ The AMiRo robot model (tested with Ubuntu 16.04, ROS Kinetic, Gazebo 7.8)
 Preparation
 
 * Build this package (e.g. `catkin_make`)
-* Export `<path>/amiro_gazebo/models/` to your `GAZEBO_MODEL_PATH` environment variable
+* Export `<amiro_robot path>/amiro_gazebo/models/` to your `GAZEBO_MODEL_PATH` environment variable
 
 Rviz (standalone visualization):
 

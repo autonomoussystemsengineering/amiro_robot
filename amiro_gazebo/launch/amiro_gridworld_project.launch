@@ -25,7 +25,7 @@
   <!-- Load the AMiRo basic with namespace amiro1 -->
   <include file="$(find amiro_description)/launch/amiro.launch" clear_params="true" ns="amiro1">
     <arg name="robot_name" value="amiro1" />
-    <arg name="robot_position" value="-x 1.113690 -y 0.397503 -z 0.01 -R 0.0 -P 0.0 -Y 1.5655" />
+    <arg name="robot_position" value="-x 1.063690 -y 0.347503 -z 0.01 -R 0.0 -P 0.0 -Y 1.5655" />
     <arg name="update_rate" value="$(arg gz_update_rate)" />
     <arg name="robot_model" value="amiro_basic.xacro" />
     <arg name="enable_proximity_floor_mockup" value="true" />
