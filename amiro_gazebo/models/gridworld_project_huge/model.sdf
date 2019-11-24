@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<sdf version="1.4">
+<model name="gridworld_project_huge">
+  <static>true</static>
+    <link name="link">
+      <pose>0.75 0.457 0 0 0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <plane>
+            <normal>0 0 1</normal>
+            <size>2.067 2.067</size>
+          </plane>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>100</mu>
+              <mu2>50</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name="visual">
+        <cast_shadows>false</cast_shadows>
+        <geometry>
+          <plane>
+            <normal>0 0 1</normal>
+            <size>2.067 2.067</size>
+          </plane>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://gridworld_project_huge/materials/gridworld.material</uri>
+            <name>GridworldProjectHuge/Image</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>
+
