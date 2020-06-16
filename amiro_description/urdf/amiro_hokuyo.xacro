@@ -10,6 +10,10 @@
   <xacro:property name="hokuyo_link_height" value="${lid_link_height + hokuyo_base_depth / 2 * sin(hokuyo_base_pitch)}" /> <!-- (m) new sensor base height after tilted-->
 
   <!-- Laser -->
+  <!--
+  <xacro:include filename="$(find amiro_description)/urdf/laser/hokuyo_gpu.xacro"/>
+  <xacro:laser_gpu name="laser_gpu" parent="${base_link}" xyz="0 0 ${hokuyo_link_height}" rpy="0 ${hokuyo_base_pitch} 0" meshes="package://amiro_description/meshes/laser"/>
+  -->
   <xacro:include filename="$(find amiro_description)/urdf/laser/hokuyo.xacro"/>
   <xacro:laser name="laser" parent="${base_link}" xyz="0 0 ${hokuyo_link_height}" rpy="0 ${hokuyo_base_pitch} 0" meshes="package://amiro_description/meshes/laser"/>
 
